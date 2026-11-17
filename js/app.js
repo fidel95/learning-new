@@ -3,8 +3,9 @@ import { lesson as lesson1 } from './lessons/01-variables.js';
 import { lesson as lesson2 } from './lessons/02-functions.js';
 import { lesson as lesson3 } from './lessons/03-control-flow.js';
 import { lesson as lesson4 } from './lessons/04-objects.js';
+import { lesson as lesson5 } from './lessons/05-dom.js';
 
-const lessons = [lesson1, lesson2, lesson3, lesson4];       // add each new lesson here, in order
+const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5];       // add each new lesson here, in order
 
 const left = document.getElementById('left');
 const right = document.getElementById('right');

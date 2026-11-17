@@ -2,7 +2,7 @@
 import { runCode } from './runner.js';
 
 // Small helper: build an element with attributes and text in one line.
-function el(tag, attrs = {}, text = '') {
+export function el(tag, attrs = {}, text = '') {
   const node = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
   if (text) node.textContent = text;

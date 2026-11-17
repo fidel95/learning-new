@@ -213,3 +213,16 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .obj__row { display: flex; gap: 10px; padding: 2px 10px; font: 13.5px var(--mono); border-bottom: 1px dashed var(--paper-edge); }
 .obj__key { color: var(--red); min-width: 56px; }
 .obj__val { word-break: break-all; }
+
+/* ---------- Web page lab (lesson 5) ---------- */
+.tabs { display: flex; gap: 2px; margin-bottom: -1px; position: relative; z-index: 1; }
+.tab { font: 600 12.5px system-ui; padding: 5px 14px; border: 1px solid var(--paper-edge); border-bottom: 0; background: var(--paper-edge); color: var(--ink-soft); border-radius: 4px 4px 0 0; cursor: pointer; }
+.tab.is-on { background: var(--code-bg); color: var(--ink); }
+.preview { border: 1.5px solid var(--ink); border-radius: 4px; background: #fff; overflow: hidden; }
+.preview iframe { display: block; width: 100%; height: 210px; border: 0; background: #fff; }
+.dtree { font: 13px/1.5 var(--mono); background: var(--code-bg); border: 1px solid var(--paper-edge); border-radius: 4px; padding: 8px 10px; max-height: 220px; overflow: auto; }
+.dtree ul { list-style: none; margin: 0; padding-left: 16px; border-left: 1px dotted var(--ink-soft); }
+.dtree > ul { padding-left: 0; border-left: 0; }
+.dtree li { font-size: 13px; line-height: 1.5; margin: 0; }
+.dtree__tag { color: var(--red); font-weight: 600; }
+.dtree__text { color: var(--ink-soft); font-style: italic; }

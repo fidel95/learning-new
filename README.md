@@ -12,6 +12,7 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 - `js/app.js` — page turning, progress (XP, streak) saved in localStorage
 - `js/runner.js` — runs learner code in a Web Worker (infinite loops can't freeze the page)
 - `js/workbench.js` — editor, memory diagram, console, checklist, quiz
+- `js/dom.js` — web page lab: sandboxed iframe, live DOM tree, automated click/type tests
 - `js/lessons/` — one file per lesson
 
 ## Lessons
@@ -19,3 +20,4 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 2. Functions, scope & the call stack (done)
 3. Decisions, loops & arrays (done)
 4. Objects, references & JSON (done)
+5. The browser: DOM & events (done)
