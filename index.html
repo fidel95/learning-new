@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Engineer's Book</title>
+  <meta name="description" content="An interactive 3D book that teaches software engineering by doing.">
+  <link rel="stylesheet" href="css/book.css">
+</head>
+<body>
+  <!-- HUD = "heads-up display": your progress, always visible -->
+  <header class="hud">
+    <div class="hud__brand">The Engineer's Book</div>
+    <div class="hud__lesson" id="lessonTitle"></div>
+    <div class="hud__stats">
+      <span title="Experience points" id="xp">0 XP</span>
+      <span title="Days in a row you studied" id="streak">0-day streak</span>
+    </div>
+  </header>
+
+  <!-- The "scene" gives the book a 3D camera (CSS perspective). -->
+  <main class="scene">
+    <div class="book" id="book">
+      <section class="page page--left" id="left" aria-label="Left page"></section>
+      <section class="page page--right" id="right" aria-label="Right page"></section>
+      <div class="leaf" id="leaf" aria-hidden="true"></div>
+    </div>
+  </main>
+
+  <noscript>This book needs JavaScript turned on.</noscript>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

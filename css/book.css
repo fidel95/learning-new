@@ -1,0 +1,181 @@
+/* ------------------------------------------------------------------
+   The look: a cream paper book on a slate desk, red ink accents.
+   Colors live in variables (--name) so you change them in one place.
+------------------------------------------------------------------- */
+:root {
+  --desk: #6b7a80;
+  --paper: #f3ead6;
+  --paper-edge: #e3d6b8;
+  --ink: #2b2118;
+  --ink-soft: #5b4e40;
+  --red: #b3402f;
+  --green: #3f7d4e;
+  --cover: #5a3a22;
+  --code-bg: #fbf6ea;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--serif);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 10px 20px; color: #e9eef0; font: 600 14px/1.2 system-ui, sans-serif;
+  background: rgba(0, 0, 0, .18);
+}
+.hud__brand { letter-spacing: .04em; }
+.hud__lesson { opacity: .8; font-weight: 500; }
+.hud__stats { display: flex; gap: 14px; }
+.hud__stats span { background: rgba(255,255,255,.14); padding: 4px 10px; border-radius: 999px; }
+
+/* ---------- Scene + book ---------- */
+.scene {
+  flex: 1; display: grid; place-items: center; padding: 24px 12px;
+  perspective: 2200px;                 /* how strong the 3D depth looks */
+}
+.book {
+  position: relative;
+  width: min(1240px, 96vw);
+  height: min(720px, calc(100vh - 110px));
+  min-height: 560px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--cover);
+  padding: 10px 12px 14px;
+  border-radius: 6px 10px 10px 6px;
+  box-shadow: 0 30px 40px -10px rgba(0,0,0,.45), 0 2px 0 #3d2514;
+  transform: rotateX(16deg);           /* tilted toward you, like the photos */
+  transform-origin: 50% 100%;
+  transform-style: preserve-3d;
+  transition: transform .5s ease;
+}
+/* When you are working in the book, lay it flat so typing feels normal. */
+.book:hover, .book:focus-within { transform: rotateX(2deg); }
+
+.page {
+  position: relative; background: var(--paper);
+  padding: 28px 34px 18px; overflow: auto;
+  display: flex; flex-direction: column;
+  scrollbar-width: thin;
+}
+.page--left  { border-radius: 4px 0 0 4px; box-shadow: inset -26px 0 30px -22px rgba(60,40,20,.45); }
+.page--right { border-radius: 0 4px 4px 0; box-shadow: inset  26px 0 30px -22px rgba(60,40,20,.45); }
+
+/* The turning page: a paper sheet that swings around the spine. */
+.leaf {
+  position: absolute; top: 10px; bottom: 14px; left: 50%; width: calc(50% - 12px);
+  background: linear-gradient(90deg, #d9cba9, var(--paper) 30%);
+  transform-origin: left center; transform: rotateY(0deg);
+  opacity: 0; pointer-events: none; border-radius: 0 4px 4px 0;
+}
+.leaf.is-turning { opacity: 1; animation: turn .8s ease-in-out forwards; }
+.leaf.is-turning-back { opacity: 1; animation: turnBack .8s ease-in-out forwards; }
+@keyframes turn     { from { transform: rotateY(0); }      to { transform: rotateY(-180deg); } }
+@keyframes turnBack { from { transform: rotateY(-180deg); } to { transform: rotateY(0); } }
+
+/* ---------- Typography inside pages ---------- */
+.kicker { font: italic 12px/1 var(--serif); color: var(--ink-soft); margin: 0 0 6px; }
+h1, h2 { font-weight: 700; line-height: 1.15; margin: 0 0 10px; }
+h1 { font-size: 28px; }
+h2 { font-size: 19px; margin-top: 22px; }
+p, li { font-size: 15.5px; line-height: 1.55; }
+p { margin: 0 0 10px; }
+ul, ol { padding-left: 20px; margin: 0 0 10px; }
+code { font: 13.5px var(--mono); background: var(--code-bg); padding: 1px 5px; border-radius: 3px; border: 1px solid var(--paper-edge); }
+pre {
+  font: 13.5px/1.5 var(--mono); background: var(--code-bg); border: 1px solid var(--paper-edge);
+  border-radius: 4px; padding: 10px 12px; overflow: auto; margin: 0 0 12px;
+}
+pre code { border: 0; padding: 0; background: none; }
+.senior, .warn {
+  border-left: 3px solid var(--red); padding: 6px 12px; margin: 12px 0;
+  background: rgba(179,64,47,.07); font-size: 14.5px;
+}
+.senior::before { content: "Senior engineer's note  "; font: 700 11px system-ui; color: var(--red); text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: 2px; }
+.warn::before   { content: "Common mistake  "; font: 700 11px system-ui; color: var(--red); text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: 2px; }
+
+/* ---------- Checklist (tasks) ---------- */
+.tasks { list-style: none; padding: 0; margin: 0 0 14px; }
+.tasks li { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+.tasks .box {
+  flex: none; width: 18px; height: 18px; margin-top: 2px; border: 1.5px solid var(--ink-soft);
+  border-radius: 3px; display: grid; place-items: center; font: 700 13px system-ui; color: transparent;
+}
+.tasks li.done .box { background: var(--green); border-color: var(--green); color: #fff; }
+.tasks li.done span:last-child { color: var(--ink-soft); }
+
+/* ---------- Workbench (editor + memory + console) ---------- */
+.editor {
+  width: 100%; min-height: 150px; resize: vertical; font: 14px/1.5 var(--mono);
+  background: var(--code-bg); color: var(--ink); border: 1px solid var(--paper-edge);
+  border-radius: 4px; padding: 10px 12px; tab-size: 2;
+}
+.editor:focus { outline: 2px solid var(--red); outline-offset: 1px; }
+.bar { display: flex; gap: 10px; align-items: center; margin: 8px 0 12px; font: 13px system-ui; color: var(--ink-soft); }
+button.btn, .link-btn {
+  font: 600 13px system-ui; cursor: pointer; border-radius: 4px; padding: 7px 14px;
+  border: 1.5px solid var(--red); background: var(--red); color: #fff;
+}
+button.btn:hover { filter: brightness(1.08); }
+button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
+.link-btn { background: none; color: var(--red); border-color: transparent; padding: 4px 0; }
+.link-btn:hover:not(:disabled) { text-decoration: underline; }
+
+.label { font: 700 11px system-ui; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 10px 0 6px; }
+.memory { display: flex; flex-wrap: wrap; gap: 10px; min-height: 76px; }
+.memory .empty { font-style: italic; color: var(--ink-soft); font-size: 14px; }
+.cell {
+  min-width: 108px; border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea;
+  overflow: hidden; animation: pop .35s ease;
+}
+.cell__name { font: 700 12.5px var(--mono); padding: 3px 8px; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; gap: 8px; }
+.cell__kind { opacity: .7; font-weight: 500; }
+.cell__value { font: 15px var(--mono); padding: 6px 8px 2px; word-break: break-all; }
+.cell__type { font: italic 11.5px var(--serif); padding: 0 8px 5px; color: var(--ink-soft); }
+.cell.changed { animation: flash .7s ease; }
+@keyframes pop   { from { transform: scale(.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes flash { 0%, 100% { background: #fff9ea; } 35% { background: #f6d28b; } }
+
+.console { font: 13px/1.5 var(--mono); background: #231a12; color: #f3ead6; border-radius: 4px; padding: 8px 12px; min-height: 44px; white-space: pre-wrap; }
+.console .err { color: #ff9c8a; }
+.console .muted { color: #a8957a; }
+
+/* ---------- Quiz ---------- */
+.q { margin: 0 0 18px; }
+.q__opts { display: grid; gap: 6px; margin-top: 6px; }
+.q__opt {
+  text-align: left; font: 14px var(--mono); padding: 8px 12px; cursor: pointer;
+  background: var(--code-bg); border: 1.5px solid var(--paper-edge); border-radius: 4px; color: var(--ink);
+}
+.q__opt:hover:not(:disabled) { border-color: var(--red); }
+.q__opt.right { border-color: var(--green); background: #e3f1e5; }
+.q__opt.wrong { border-color: var(--red); background: #f7dcd6; }
+.q__why { font-size: 14px; margin: 6px 0 0; color: var(--ink-soft); }
+
+/* ---------- Page footers (back / turn) ---------- */
+.foot { margin-top: auto; padding-top: 18px; display: flex; justify-content: space-between; font: italic 13px var(--serif); }
+.foot .hint { color: var(--ink-soft); }
+
+/* ---------- Phones: no 3D, pages stack ---------- */
+@media (max-width: 900px) {
+  .book { grid-template-columns: 1fr; height: auto; transform: none !important; padding: 8px; }
+  .page { overflow: visible; }
+  .leaf { display: none; }
+  .hud__lesson { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .book { transform: none !important; transition: none; }
+  .leaf.is-turning, .leaf.is-turning-back { animation-duration: .01s; }
+  .cell, .cell.changed { animation: none; }
+}
+
+/* Page is a flex column; stop children (like code blocks) from being squashed to fit. */
+.page > * { flex-shrink: 0; }
