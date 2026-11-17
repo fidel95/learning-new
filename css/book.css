@@ -179,3 +179,14 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 
 /* Page is a flex column; stop children (like code blocks) from being squashed to fit. */
 .page > * { flex-shrink: 0; }
+
+/* ---------- Call stack panel ---------- */
+.stack { display: flex; flex-direction: column-reverse; gap: 4px; min-height: 40px; }
+.frame { border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; padding: 5px 10px; font: 13.5px var(--mono); animation: pop .3s ease; }
+.frame--base { background: var(--paper-edge); border-style: dashed; font-style: italic; font-family: var(--serif); color: var(--ink-soft); }
+.frame--top { background: #f6d28b; border-color: var(--red); font-weight: 700; }
+.stack__caption { font: italic 14px var(--serif); margin: 8px 0 0; min-height: 22px; }
+
+/* ---------- Lesson picker ---------- */
+.hud select { font: 500 14px system-ui, sans-serif; color: #e9eef0; background: rgba(255,255,255,.14); border: 0; border-radius: 6px; padding: 5px 10px; max-width: 46vw; }
+.hud select option { color: #222; }

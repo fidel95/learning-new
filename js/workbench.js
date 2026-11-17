@@ -17,7 +17,7 @@ function el(tag, attrs = {}, text = '') {
  *   onPass:   called once when every task is done
  *   autorun:  run automatically while typing (good for playgrounds)
  */
-export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPass = () => {}, autorun = false, rows = 7 }) {
+export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPass = () => {}, autorun = false, rows = 7, probes = {}, trace = false }) {
   const editor = el('textarea', { class: 'editor', spellcheck: 'false', rows: String(rows), 'aria-label': 'Code editor' });
   editor.value = starter;
 
@@ -32,7 +32,22 @@ export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPa
   const consoleLabel = el('div', { class: 'label' }, 'Console');
   const consoleBox = el('div', { class: 'console' });
 
-  root.append(editor, bar, memoryLabel, memory, consoleLabel, consoleBox);
+  root.append(editor, bar, memoryLabel, memory);
+
+  // Optional "Call stack" panel: replay each function call/return one step at a time.
+  const stackBox = el('div', { class: 'stackbox' });
+  const stackFrames = el('div', { class: 'stack' });
+  const stackCaption = el('div', { class: 'stack__caption' });
+  const prevBtn = el('button', { class: 'btn', type: 'button' }, '◀');
+  const nextBtn = el('button', { class: 'btn', type: 'button' }, 'Step ▶');
+  const playBtn = el('button', { class: 'link-btn', type: 'button' }, 'auto-play');
+  if (trace) {
+    const controls = el('div', { class: 'bar' });
+    controls.append(prevBtn, nextBtn, playBtn);
+    stackBox.append(el('div', { class: 'label' }, 'Call stack — functions waiting for each other'), stackFrames, stackCaption, controls);
+    root.append(stackBox);
+  }
+  root.append(consoleLabel, consoleBox);
 
   // Checklist items, redrawn on each run.
   const taskItems = tasks.map((t) => {
@@ -76,14 +91,53 @@ export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPa
     if (result.ok && !result.logs.length) consoleBox.append(el('div', { class: 'muted' }, '(no output — use console.log(x) to print)'));
   }
 
+  // ---- Call stack replay ----
+  let events = [];
+  let step = 0;
+  let playTimer = null;
+  const callText = (e) => e.name + '(' + e.args.join(', ') + ')';
+
+  function drawStack() {
+    stackFrames.replaceChildren();
+    const stack = [];
+    let caption = events.length ? 'Press Step ▶ to watch your functions run.' : 'Define a function with  function name() { }  and call it to see the stack.';
+    for (let i = 0; i < step; i++) {
+      const e = events[i];
+      if (e.t === 'call') { stack.push(e); caption = callText(e) + ' is called.'; }
+      else { stack.pop(); caption = e.t === 'ret' ? callText(e) + ' returns ' + e.value + '.' : callText(e) + ' threw an error.'; }
+    }
+    // Draw the bottom of the stack first; column-reverse puts the newest call on top.
+    stackFrames.append(el('div', { class: 'frame frame--base' }, '(top level of your file)'));
+    stack.forEach((e, i) => {
+      const f = el('div', { class: 'frame' + (i === stack.length - 1 ? ' frame--top' : '') }, callText(e));
+      stackFrames.append(f);
+    });
+    stackCaption.textContent = (step >= events.length && events.length ? 'Done. ' : '') + caption;
+    prevBtn.disabled = step === 0;
+    nextBtn.disabled = step >= events.length;
+  }
+  function stopPlay() { clearInterval(playTimer); playTimer = null; playBtn.textContent = 'auto-play'; }
+  function go(delta) { step = Math.max(0, Math.min(events.length, step + delta)); drawStack(); }
+  if (trace) {
+    prevBtn.addEventListener('click', () => { stopPlay(); go(-1); });
+    nextBtn.addEventListener('click', () => { stopPlay(); go(1); });
+    playBtn.addEventListener('click', () => {
+      if (playTimer) { stopPlay(); return; }
+      if (step >= events.length) step = 0;
+      playBtn.textContent = 'pause';
+      playTimer = setInterval(() => { if (step >= events.length) { stopPlay(); return; } go(1); }, 700);
+    });
+  }
+
   async function run() {
     const myRun = ++runId;
     status.textContent = 'running…';
-    const result = await runCode(editor.value);
+    const result = await runCode(editor.value, { probes });
     if (myRun !== runId) return;               // a newer run already started
     status.textContent = result.ok ? 'ran with no errors' : 'error — read the console';
     renderMemory(result);
     renderConsole(result);
+    if (trace) { stopPlay(); events = result.events; step = 0; drawStack(); }
 
     // A task only counts when the code ran without errors.
     let allDone = tasks.length > 0;
