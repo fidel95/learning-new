@@ -361,3 +361,14 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .plan__row { display: grid; grid-template-columns: 20px 1fr 40px 110px 74px; gap: 8px; align-items: center; font: 13.5px system-ui; padding: 3px 4px; border-bottom: 1px dashed var(--paper-edge); cursor: pointer; }
 .plan__d { font-family: var(--mono); } .plan__v { text-align: right; color: var(--green); font-weight: 700; }
 .plan__u { font: italic 12px var(--serif); } .plan__u--high { color: var(--red); } .plan__u--medium { color: #b07b12; } .plan__u--low { color: var(--green); }
+
+/* ---------- Capstone (lesson 15) ---------- */
+.projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 10px; }
+.project { text-align: left; font: 13px/1.35 var(--serif); padding: 8px 10px; border: 1.5px solid var(--paper-edge); background: var(--code-bg); border-radius: 6px; cursor: pointer; color: var(--ink); display: flex; flex-direction: column; gap: 3px; }
+.project b { font: 700 14px system-ui; } .project:hover { border-color: var(--red); } .project.is-on { border-color: var(--red); background: #f6e2dc; }
+.docmd { max-height: 220px; }
+.milestone { border: 1.5px solid var(--paper-edge); border-radius: 6px; padding: 6px 10px; margin: 8px 0; background: rgba(255,255,255,.35); }
+.milestone summary { cursor: pointer; display: flex; justify-content: space-between; gap: 10px; font: 14px system-ui; }
+.milestone__n { font: 600 12px var(--mono); color: var(--ink-soft); }
+.milestone__item { display: flex; gap: 8px; align-items: flex-start; font: 14.5px/1.45 var(--serif); padding: 3px 0; cursor: pointer; }
+.milestone__item input { margin-top: 4px; }

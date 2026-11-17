@@ -24,6 +24,8 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 - `js/archlab.js` — system-design simulator (teaching model) and estimation practice
 - `js/opslab.js`, `js/reslabworker.js` — deployment, resilience (failure injection) and alert-tuning labs
 - `js/peoplelab.js` — PR review lab, scope-planning simulator, scenario lab
+- `js/capstone.js` — capstone workbench (chooser, design doc, milestones, finish line)
+- `capstone-template/` — starter repo: pure-core app, tests, CI, design doc, ADR, runbook, security checklist
 - `js/dom.js` — web page lab: sandboxed iframe, live DOM tree, automated click/type tests
 - `js/lessons/` — one file per lesson
 
@@ -44,4 +46,4 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 12. Architecture & system design (done): estimation lab, scalable-system simulator with a bottleneck finder, design docs
 13. Reliability & operations (done): deploy-strategy lab, failure lab (timeouts/retries/circuit breaker), alert tuning lab
 14. Working with people (done): code-review lab, planning under uncertainty (Monte Carlo), hard-conversation scenarios
-15. Capstone with a design doc (planned)
+15. Capstone (done): project chooser, design-doc builder, milestone tracker, ship checklist; starter code in `capstone-template/`

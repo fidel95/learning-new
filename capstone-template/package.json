@@ -1,0 +1,12 @@
+{
+  "name": "my-capstone",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Replace this with one sentence about what your app does.",
+  "scripts": {
+    "test": "node --test",
+    "start": "node src/server.js"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,6 @@
+{
+  // Cloudflare Workers config. Rename "my-capstone" to your app's name.
+  "name": "my-capstone",
+  "main": "src/worker.js",
+  "compatibility_date": "2025-01-01"
+}
