@@ -22,6 +22,7 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 - `js/debuglab.js` — bisect lab and production-incident lab
 - `js/refactorlab.js` — design metrics (from the TypeScript parser) and the refactoring lab
 - `js/archlab.js` — system-design simulator (teaching model) and estimation practice
+- `js/opslab.js`, `js/reslabworker.js` — deployment, resilience (failure injection) and alert-tuning labs
 - `js/dom.js` — web page lab: sandboxed iframe, live DOM tree, automated click/type tests
 - `js/lessons/` — one file per lesson
 
@@ -40,6 +41,6 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 10. Debugging & incidents (done): method, git bisect lab, production incident lab, regression tests
 11. Design & refactoring (done): smell analyzer on the real syntax tree, refactoring under a test safety net, dependency injection
 12. Architecture & system design (done): estimation lab, scalable-system simulator with a bottleneck finder, design docs
-13. Reliability & operations: CI/CD, observability (planned)
+13. Reliability & operations (done): deploy-strategy lab, failure lab (timeouts/retries/circuit breaker), alert tuning lab
 14. Working with people: code review, estimates, tech debt (planned)
 15. Capstone with a design doc (planned)
