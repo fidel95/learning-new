@@ -56,6 +56,8 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 20. Data structures (done): stack (balanced brackets), O(1) queue, hand-built resizing hash map, O(1) LRU cache, binary min-heap, all graded on correctness and large hidden inputs
 21. Recursion, sorting and dynamic programming (done): flatten, permutations, sorting race with counted comparisons, stable merge sort, memoized climbStairs, coin-change table
 22. Trees and graphs (done): level-order, real BST, BFS maze path, flood-fill islands, Dijkstra, topological build order, animated maze explorer
+23. Problem-solving patterns (done): pattern-matching lab, sliding windows, prefix sums, interval merge, monotonic stack, canonical-key grouping. Completes Part 4
+
 
 
 
