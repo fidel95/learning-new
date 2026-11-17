@@ -320,3 +320,22 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .metric--ok { background: #e3f1e5 !important; color: var(--green); }
 .metric--warn { background: #f8ecc8 !important; color: #8a5d00; }
 .metric--bad { background: #f7dcd6 !important; color: var(--red); }
+
+/* ---------- System design lab (lesson 12) ---------- */
+.syslab__controls { display: grid; gap: 6px; margin-bottom: 10px; }
+.syslab__row { display: grid; grid-template-columns: 1fr minmax(90px, 140px) auto; gap: 8px; align-items: center; font: 13.5px system-ui; }
+.syslab__row b { min-width: 52px; text-align: right; font-family: var(--mono); }
+.syslab__row select { grid-column: 2 / 4; font: 13px system-ui; padding: 4px; background: var(--code-bg); border: 1px solid var(--paper-edge); border-radius: 4px; color: var(--ink); }
+.syslab__row input[type=checkbox] { justify-self: start; grid-column: 2; }
+.syslab__diagram { display: flex; flex-wrap: wrap; gap: 4px; align-items: stretch; margin-bottom: 10px; }
+.tier { flex: 1 1 78px; min-width: 78px; border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; padding: 5px 6px; text-align: center; }
+.tier--hot { border-color: var(--red); background: #f7dcd6; }
+.tier__t { font: 700 12px system-ui; } .tier__s { font: italic 11px var(--serif); color: var(--ink-soft); margin-bottom: 3px; }
+.tier__bar { height: 8px; background: var(--paper-edge); border-radius: 4px; overflow: hidden; }
+.tier__bar span { display: block; height: 100%; } .tier__bar .is-ok { background: var(--green); } .tier__bar .is-warm { background: #b07b12; } .tier__bar .is-hot, .tier__bar .is-over { background: var(--red); }
+.tier__u { font: 11px var(--mono); margin-top: 2px; }
+.tier__arrow { align-self: center; font-weight: 700; color: var(--ink-soft); }
+.syslab__metrics { display: grid; gap: 3px; margin-bottom: 8px; }
+.syslab__metric { display: flex; justify-content: space-between; font: 13.5px system-ui; border-bottom: 1px dashed var(--paper-edge); padding: 2px 0; }
+.syslab__metric b.ok { color: var(--green); } .syslab__metric b.warn { color: #b07b12; } .syslab__metric b.bad { color: var(--red); }
+.syslab__bottleneck { font: italic 14px var(--serif); margin-top: 4px; }

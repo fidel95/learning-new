@@ -10,8 +10,9 @@ import { lesson as lesson8 } from './lessons/08-databases.js';
 import { lesson as lesson9 } from './lessons/09-typescript-testing.js';
 import { lesson as lesson10 } from './lessons/10-debugging.js';
 import { lesson as lesson11 } from './lessons/11-design-refactoring.js';
+import { lesson as lesson12 } from './lessons/12-architecture.js';
 
-const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11];       // add each new lesson here, in order
+const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11, lesson12];       // add each new lesson here, in order
 
 const left = document.getElementById('left');
 const right = document.getElementById('right');
