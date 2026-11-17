@@ -339,3 +339,25 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .syslab__metric { display: flex; justify-content: space-between; font: 13.5px system-ui; border-bottom: 1px dashed var(--paper-edge); padding: 2px 0; }
 .syslab__metric b.ok { color: var(--green); } .syslab__metric b.warn { color: #b07b12; } .syslab__metric b.bad { color: var(--red); }
 .syslab__bottleneck { font: italic 14px var(--serif); margin-top: 4px; }
+
+/* ---------- Teamwork labs (lesson 14) ---------- */
+.review__head { margin-bottom: 6px; }
+.review { border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; margin: 6px 0 10px; overflow: hidden; }
+.review__line { border-bottom: 1px solid var(--paper-edge); }
+.review__line:last-child { border-bottom: 0; }
+.review__row { display: grid; grid-template-columns: 30px 18px 1fr; gap: 6px; padding: 1px 6px; font: 12.5px/1.5 var(--mono); cursor: pointer; }
+.review__row:hover { background: rgba(179,64,47,.08); }
+.review__n { color: var(--ink-soft); text-align: right; } .review__plus { color: var(--red); font-weight: 700; opacity: 0; }
+.review__row:hover .review__plus { opacity: 1; }
+.review__code { white-space: pre-wrap; word-break: break-all; }
+.review__form { display: flex; gap: 6px; padding: 6px; background: var(--paper-edge); }
+.review__form select { font: 13px system-ui; }
+.review__form input { flex: 1; min-width: 0; }
+.review__comment { margin: 2px 6px 6px 36px; padding: 5px 9px; border-left: 3px solid var(--ink-soft); background: #fff; font: 14px var(--serif); }
+.review__comment--bug, .review__comment--security { border-left-color: var(--red); }
+.review__comment--design { border-left-color: #b07b12; }
+.review__comment--praise { border-left-color: var(--green); }
+.plan { display: grid; gap: 4px; margin-bottom: 10px; }
+.plan__row { display: grid; grid-template-columns: 20px 1fr 40px 110px 74px; gap: 8px; align-items: center; font: 13.5px system-ui; padding: 3px 4px; border-bottom: 1px dashed var(--paper-edge); cursor: pointer; }
+.plan__d { font-family: var(--mono); } .plan__v { text-align: right; color: var(--green); font-weight: 700; }
+.plan__u { font: italic 12px var(--serif); } .plan__u--high { color: var(--red); } .plan__u--medium { color: #b07b12; } .plan__u--low { color: var(--green); }
