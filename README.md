@@ -50,3 +50,4 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 
 ### Part 3: security (see ROADMAP.md for Parts 3-6)
 16. Security: threat modeling and attacks (done): STRIDE lab, XSS lab, attack-then-patch server lab (IDOR, SQLi, mass assignment, SSRF, CSRF)
+17. Authentication and cryptography (done): crack unsalted/salted/PBKDF2 hashes with real timing, write a password hasher, fix a JWT verifier, build a session store with CSRF
