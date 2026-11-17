@@ -20,6 +20,7 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 - `js/sqllab.js` — SQL playground, SQL challenge, injection demo, server lab
 - `js/tsworker.js`, `js/tscheck.js`, `js/testworker.js`, `js/tslab.js` — the real TypeScript compiler (`vendor/`) and a Jest-style test runner, in workers
 - `js/debuglab.js` — bisect lab and production-incident lab
+- `js/refactorlab.js` — design metrics (from the TypeScript parser) and the refactoring lab
 - `js/dom.js` — web page lab: sandboxed iframe, live DOM tree, automated click/type tests
 - `js/lessons/` — one file per lesson
 
@@ -36,7 +37,7 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 
 ### Part 2: software engineering (the practice, not just the syntax)
 10. Debugging & incidents (done): method, git bisect lab, production incident lab, regression tests
-11. Design & refactoring (planned)
+11. Design & refactoring (done): smell analyzer on the real syntax tree, refactoring under a test safety net, dependency injection
 12. Architecture & system design (planned)
 13. Reliability & operations: CI/CD, observability (planned)
 14. Working with people: code review, estimates, tech debt (planned)

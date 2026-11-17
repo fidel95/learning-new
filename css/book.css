@@ -314,3 +314,9 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .diff { padding: 6px 0; } .diff div { padding: 0 10px; white-space: pre-wrap; }
 .diff__add { background: #dff0e0; } .diff__del { background: #f7dcd6; }
 .q__opt--radio { display: block; cursor: pointer; font: 14px var(--serif); }
+
+/* ---------- Design metrics (lesson 11) ---------- */
+.metric { text-align: center; font-weight: 700; }
+.metric--ok { background: #e3f1e5 !important; color: var(--green); }
+.metric--warn { background: #f8ecc8 !important; color: #8a5d00; }
+.metric--bad { background: #f7dcd6 !important; color: var(--red); }

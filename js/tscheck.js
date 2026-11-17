@@ -25,6 +25,17 @@ export function checkTs(code) {
   });
 }
 
+/** analyzeCode(code) → { ok, analysis: { functions, magic, vague, duplicates, syntax } } (design metrics from the syntax tree) */
+export function analyzeCode(code) {
+  if (!tsWorker) startTs();
+  return new Promise((resolve) => {
+    const id = nextId++;
+    const timer = setTimeout(() => { waiting.delete(id); failAll('The code analyzer took too long and was restarted.'); resolve({ id, ok: false, error: 'The analyzer took too long and was restarted. Try again.' }); }, 30000);
+    waiting.set(id, { resolve, timer });
+    tsWorker.postMessage({ id, type: 'analyze', code });
+  });
+}
+
 /** Run plain JavaScript (the compiled output) safely and return { ok, logs, error }. */
 export async function runJs(js) { const r = await runCode(js); return { ok: r.ok, logs: r.logs, error: r.error }; }
 
