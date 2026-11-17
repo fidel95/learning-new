@@ -372,3 +372,9 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .milestone__n { font: 600 12px var(--mono); color: var(--ink-soft); }
 .milestone__item { display: flex; gap: 8px; align-items: flex-start; font: 14.5px/1.45 var(--serif); padding: 3px 0; cursor: pointer; }
 .milestone__item input { margin-top: 4px; }
+
+/* ---------- Security labs (lesson 16) ---------- */
+.tm__row { display: grid; gap: 6px; margin-top: 6px; }
+.tm__row select { font: 13px system-ui; padding: 5px; background: var(--code-bg); border: 1px solid var(--paper-edge); border-radius: 4px; color: var(--ink); max-width: 100%; }
+.tm--ok { border-color: var(--green) !important; background: #e8f3ea !important; }
+.tm--bad { border-color: var(--red) !important; }

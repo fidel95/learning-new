@@ -52,6 +52,15 @@ const WORKER_SOURCE = `
     const empty = status === 204 || data === undefined;
     return { __resp: true, status, headers: Object.assign(empty ? {} : { 'content-type': 'application/json; charset=utf-8' }, headers || {}), body: empty ? '' : JSON.stringify(data) };
   }
+  // A pretend way for server code to download a web page (used in the security lab). Internal addresses hold "secrets".
+  function fetchUrl(u) {
+    let url;
+    try { url = new URL(u); } catch (e) { throw new Error('Invalid URL'); }
+    const host = url.hostname;
+    if (/^(localhost|127\\.|10\\.|192\\.168\\.|169\\.254\\.|0\\.0\\.0\\.0|internal\\.)/.test(host) || host.endsWith('.internal')) return 'INTERNAL ONLY: AWS_SECRET_ACCESS_KEY=wJalr-FAKE-SECRET-KEY';
+    if (host === 'example.com' || host === 'blog.example.org') return '<html><h1>A public article</h1><p>Hello readers.</p></html>';
+    throw new Error('Could not resolve host ' + host);
+  }
   const app = {};
   for (const m of ['get', 'post', 'put', 'patch', 'delete']) {
     app[m] = (path, handler) => {
@@ -108,7 +117,7 @@ const WORKER_SOURCE = `
         SQL = await initSqlJs({ locateFile: () => m.wasmUrl });
         db = new SQL.Database();
         if (m.seed) db.exec(m.seed);
-        if (m.code) { const fn = new Function('app', 'db', 'json', 'console', '"use strict";\\n' + m.code); fn(app, dbApi, json, fakeConsole); }
+        if (m.code) { const fn = new Function('app', 'db', 'json', 'console', 'fetchUrl', '"use strict";\\n' + m.code); fn(app, dbApi, json, fakeConsole, fetchUrl); }
         self.postMessage({ id: m.id, ok: true, logs: drainLogs() });
       } else if (m.type === 'sql') {                   // run one or more statements, return every result table
         const results = db.exec(m.sql);

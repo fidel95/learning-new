@@ -170,27 +170,37 @@ export function mountServerLab(root, { seed, code, examples = [], viewTable = 'n
   const method = el('select', { 'aria-label': 'HTTP method' }); ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].forEach((m) => method.append(el('option', { value: m }, m)));
   const url = el('input', { class: 'ex__url', type: 'text', spellcheck: 'false', 'aria-label': 'URL' });
   const line = el('div', { class: 'reqline' }); line.append(method, url);
+  const headersBox = el('textarea', { class: 'editor', rows: '2', spellcheck: 'false', placeholder: 'Headers, one per line  (Name: value)', 'aria-label': 'Headers' });
   const body = el('textarea', { class: 'editor', rows: '2', spellcheck: 'false', placeholder: 'JSON body (the panel adds Content-Type: application/json for you)', 'aria-label': 'Body' });
   const send = el('button', { class: 'btn', type: 'button' }, 'Send request');
   const sendBar = el('div', { class: 'bar' }); sendBar.append(send);
   const resp = el('div');
   const viewBox = el('div');
-  examples.forEach((e) => { const b = el('button', { class: 'chip', type: 'button' }, e.name); b.addEventListener('click', () => { method.value = e.method; url.value = e.url; body.value = e.body || ''; }); ex.append(b); });
-  if (examples[0]) { method.value = examples[0].method; url.value = examples[0].url; }
+  examples.forEach((e) => { const b = el('button', { class: 'chip', type: 'button' }, e.name); b.addEventListener('click', () => { method.value = e.method; url.value = e.url; body.value = e.body || ''; headersBox.value = e.headers || ''; }); ex.append(b); });
+  if (examples[0]) { method.value = examples[0].method; url.value = examples[0].url; headersBox.value = examples[0].headers || ''; }
 
   root.append(editor, bar, el('div', { class: 'label' }, 'Server log'), logBox,
-    el('div', { class: 'label' }, 'Send your own request to your server'), ex, line, body, sendBar, resp,
-    el('div', { class: 'label' }, 'Inside the database right now: table ' + viewTable), viewBox);
+    el('div', { class: 'label' }, 'Send your own request to your server'), ex, line, headersBox, body, sendBar, resp,
+    el('div', { class: 'label' }, 'Inside the database right now: ' + [].concat(viewTable).join(', ')), viewBox);
 
   const taskItems = tasks.map((t) => { const li = el('li'); li.append(el('span', { class: 'box', 'aria-hidden': 'true' }, '✓'), el('span', {}, t.label)); return li; });
   if (tasksEl && tasks.length) { const ul = el('ul', { class: 'tasks' }); ul.append(...taskItems); tasksEl.append(ul); }
 
   const showLogs = (logs, isErr) => (logs || []).forEach((l) => logBox.append(el('div', { class: isErr ? 'err' : '' }, l)));
   async function refreshView() {
-    const r = await db.query('SELECT * FROM ' + viewTable);
-    viewBox.replaceChildren(r.ok ? drawTable(r.columns, r.rows) : el('div', { class: 'muted' }, 'Table not available: ' + r.error));
+    viewBox.replaceChildren();
+    for (const name of [].concat(viewTable)) {
+      const r = await db.query('SELECT * FROM ' + name);
+      viewBox.append(el('div', { class: 'muted' }, name), r.ok ? drawTable(r.columns, r.rows) : el('div', { class: 'muted' }, 'Table not available: ' + r.error));
+    }
   }
-  const toRequest = (r) => ({ method: r.method, url: r.url, body: r.body || '', headers: r.body ? { 'content-type': 'application/json' } : {} });
+  const parseHeaders = (h) => {                      // "Name: value" lines (or an object) → lower-case names
+    const out = {};
+    if (h && typeof h === 'object') { for (const [k, v] of Object.entries(h)) out[k.toLowerCase()] = String(v); return out; }
+    String(h || '').split('\n').forEach((l) => { const i = l.indexOf(':'); if (i > 0) out[l.slice(0, i).trim().toLowerCase()] = l.slice(i + 1).trim(); });
+    return out;
+  };
+  const toRequest = (r) => { const headers = parseHeaders(r.headers); if (r.body && !headers['content-type']) headers['content-type'] = 'application/json'; return { method: r.method, url: r.url, body: r.body || '', headers }; };
 
   let passed = false, runId = 0;
   async function start() {
@@ -219,7 +229,7 @@ export function mountServerLab(root, { seed, code, examples = [], viewTable = 'n
   function markTasks(results) {
     let all = tasks.length > 0;
     tasks.forEach((t, i) => {
-      let ok = false; if (results) { try { ok = !!t.check(results, editor.value); } catch { ok = false; } }
+      let ok = false; if (results) { try { const res = t.check(results, editor.value); ok = res && typeof res === 'object' ? !!res.ok : !!res; } catch { ok = false; } }
       taskItems[i].classList.toggle('done', ok); if (!ok) all = false;
     });
     if (all && !passed) { passed = true; onPass(); }
@@ -227,7 +237,7 @@ export function mountServerLab(root, { seed, code, examples = [], viewTable = 'n
 
   send.addEventListener('click', async () => {
     send.disabled = true; resp.replaceChildren(el('div', { class: 'muted' }, 'waiting…'));
-    const r = await db.request(toRequest({ method: method.value, url: url.value, body: body.value }));
+    const r = await db.request(toRequest({ method: method.value, url: url.value, body: body.value, headers: headersBox.value }));
     send.disabled = false; resp.replaceChildren();
     if (!r.ok) { resp.append(el('div', { class: 'status status--bad' }, r.error)); return; }
     const s = r.response; const cls = s.status >= 500 ? 'bad' : s.status >= 400 ? 'warn' : s.status >= 300 ? 'info' : 'good';

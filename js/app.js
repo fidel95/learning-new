@@ -14,8 +14,9 @@ import { lesson as lesson12 } from './lessons/12-architecture.js';
 import { lesson as lesson13 } from './lessons/13-reliability.js';
 import { lesson as lesson14 } from './lessons/14-teamwork.js';
 import { lesson as lesson15 } from './lessons/15-capstone.js';
+import { lesson as lesson16 } from './lessons/16-security-attacks.js';
 
-const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11, lesson12, lesson13, lesson14, lesson15];       // add each new lesson here, in order
+const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11, lesson12, lesson13, lesson14, lesson15, lesson16];       // add each new lesson here, in order
 
 const left = document.getElementById('left');
 const right = document.getElementById('right');

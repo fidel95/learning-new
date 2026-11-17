@@ -47,3 +47,6 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 13. Reliability & operations (done): deploy-strategy lab, failure lab (timeouts/retries/circuit breaker), alert tuning lab
 14. Working with people (done): code-review lab, planning under uncertainty (Monte Carlo), hard-conversation scenarios
 15. Capstone (done): project chooser, design-doc builder, milestone tracker, ship checklist; starter code in `capstone-template/`
+
+### Part 3: security (see ROADMAP.md for Parts 3-6)
+16. Security: threat modeling and attacks (done): STRIDE lab, XSS lab, attack-then-patch server lab (IDOR, SQLi, mass assignment, SSRF, CSRF)
