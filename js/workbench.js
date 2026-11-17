@@ -17,7 +17,7 @@ function el(tag, attrs = {}, text = '') {
  *   onPass:   called once when every task is done
  *   autorun:  run automatically while typing (good for playgrounds)
  */
-export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPass = () => {}, autorun = false, rows = 7, probes = {}, trace = false }) {
+export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPass = () => {}, autorun = false, rows = 7, probes = {}, trace = false, loops = false }) {
   const editor = el('textarea', { class: 'editor', spellcheck: 'false', rows: String(rows), 'aria-label': 'Code editor' });
   editor.value = starter;
 
@@ -46,6 +46,11 @@ export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPa
     controls.append(prevBtn, nextBtn, playBtn);
     stackBox.append(el('div', { class: 'label' }, 'Call stack — functions waiting for each other'), stackFrames, stackCaption, controls);
     root.append(stackBox);
+  }
+  const loopBox = el('div', { class: 'loopbox' });
+  if (loops) {
+    loopBox.append(el('div', { class: 'label' }, 'Loop trace — each row is one pass through the loop'));
+    root.append(loopBox);
   }
   root.append(consoleLabel, consoleBox);
 
@@ -78,7 +83,24 @@ export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPa
       if (previous[name] !== undefined && previous[name] !== v.text) cell.classList.add('changed');
       const top = el('div', { class: 'cell__name' });
       top.append(el('span', {}, name), el('span', { class: 'cell__kind' }, result.kinds[name] || ''));
-      cell.append(top, el('div', { class: 'cell__value' }, v.text), el('div', { class: 'cell__type' }, 'type: ' + v.type));
+      cell.append(top);
+      if (v.type === 'array') {
+        // Arrays are drawn as a row of numbered slots: the number is the INDEX (starts at 0).
+        let items = [];
+        try { items = JSON.parse(v.text); } catch { items = []; }
+        const row = el('div', { class: 'arr' });
+        items.slice(0, 12).forEach((item, i) => {
+          const slot = el('div', { class: 'arr__slot' });
+          slot.append(el('div', { class: 'arr__idx' }, String(i)), el('div', { class: 'arr__val' }, JSON.stringify(item)));
+          row.append(slot);
+        });
+        if (items.length > 12) row.append(el('div', { class: 'arr__more' }, '… +' + (items.length - 12)));
+        if (!items.length) row.append(el('div', { class: 'arr__more' }, 'empty'));
+        cell.classList.add('cell--wide');
+        cell.append(row, el('div', { class: 'cell__type' }, 'type: array · length ' + items.length));
+      } else {
+        cell.append(el('div', { class: 'cell__value' }, v.text), el('div', { class: 'cell__type' }, 'type: ' + v.type));
+      }
       memory.append(cell);
     }
     previous = Object.fromEntries(names.map((n) => [n, result.vars[n].text]));
@@ -89,6 +111,43 @@ export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPa
     for (const line of result.logs) consoleBox.append(el('div', {}, line));
     if (!result.ok) consoleBox.append(el('div', { class: 'err' }, result.error));
     if (result.ok && !result.logs.length) consoleBox.append(el('div', { class: 'muted' }, '(no output — use console.log(x) to print)'));
+  }
+
+  // ---- Loop trace: one table per loop, one row per pass ----
+  function renderLoops(result) {
+    loopBox.querySelectorAll('.looptable, .loopnote').forEach((n) => n.remove());
+    if (!result.steps.length) {
+      loopBox.append(el('div', { class: 'loopnote' }, 'Write a for or while loop with { } braces and its passes appear here.'));
+      return;
+    }
+    const byLoop = new Map();
+    for (const st of result.steps) {
+      if (!byLoop.has(st.loop)) byLoop.set(st.loop, []);
+      byLoop.get(st.loop).push(st.vars);
+    }
+    for (const [id, rows] of byLoop) {
+      // Only show variables that change between passes (plus everything if there is just one pass).
+      const all = Object.keys(rows[0] || {});
+      let cols = all.filter((k) => rows.some((r) => r[k] !== rows[0][k]));
+      if (!cols.length) cols = all;
+      const table = el('table', { class: 'looptable' });
+      const head = el('tr');
+      head.append(el('th', {}, 'pass'), ...cols.map((c) => el('th', {}, c)));
+      table.append(head);
+      rows.slice(0, 40).forEach((r, i) => {
+        const tr = el('tr');
+        tr.append(el('td', { class: 'looptable__n' }, String(i + 1)));
+        cols.forEach((c) => {
+          const td = el('td', {}, r[c] === undefined ? '' : r[c]);
+          if (i > 0 && rows[i - 1][c] !== r[c]) td.classList.add('looptable__changed');
+          tr.append(td);
+        });
+        table.append(tr);
+      });
+      loopBox.append(table);
+      if (rows.length > 40) loopBox.append(el('div', { class: 'loopnote' }, 'Showing the first 40 of ' + rows.length + ' passes.'));
+      if (byLoop.size > 1) table.setAttribute('aria-label', 'Loop ' + (id + 1));
+    }
   }
 
   // ---- Call stack replay ----
@@ -138,6 +197,7 @@ export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPa
     renderMemory(result);
     renderConsole(result);
     if (trace) { stopPlay(); events = result.events; step = 0; drawStack(); }
+    if (loops) renderLoops(result);
 
     // A task only counts when the code ran without errors.
     let allDone = tasks.length > 0;

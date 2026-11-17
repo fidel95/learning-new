@@ -190,3 +190,19 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 /* ---------- Lesson picker ---------- */
 .hud select { font: 500 14px system-ui, sans-serif; color: #e9eef0; background: rgba(255,255,255,.14); border: 0; border-radius: 6px; padding: 5px 10px; max-width: 46vw; }
 .hud select option { color: #222; }
+
+/* ---------- Arrays in memory ---------- */
+.cell--wide { min-width: 0; }
+.arr { display: flex; flex-wrap: wrap; gap: 0; padding: 8px 8px 2px; }
+.arr__slot { border: 1.5px solid var(--ink); margin-left: -1.5px; text-align: center; min-width: 38px; background: #fff; }
+.arr__idx { font: 700 10.5px system-ui; background: var(--paper-edge); color: var(--ink-soft); border-bottom: 1.5px solid var(--ink); padding: 1px 0; }
+.arr__val { font: 14px var(--mono); padding: 4px 6px; }
+.arr__more { align-self: center; padding-left: 8px; font: italic 13px var(--serif); color: var(--ink-soft); }
+
+/* ---------- Loop trace table ---------- */
+.looptable { border-collapse: collapse; font: 13px var(--mono); margin-bottom: 8px; }
+.looptable th { background: var(--ink); color: var(--paper); padding: 3px 12px; text-align: left; font-weight: 600; }
+.looptable td { border: 1px solid var(--paper-edge); background: #fff9ea; padding: 3px 12px; }
+.looptable__n { color: var(--ink-soft); background: var(--paper-edge) !important; }
+.looptable__changed { background: #f6d28b !important; animation: flash .7s ease; }
+.loopnote { font: italic 14px var(--serif); color: var(--ink-soft); margin-bottom: 8px; }

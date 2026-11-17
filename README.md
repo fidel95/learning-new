@@ -17,3 +17,4 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 ## Lessons
 1. Memory, values & variables (done)
 2. Functions, scope & the call stack (done)
+3. Decisions, loops & arrays (done)

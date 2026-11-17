@@ -1,8 +1,9 @@
 // app.js — the book itself: shows a spread, turns pages, switches lessons, tracks progress.
 import { lesson as lesson1 } from './lessons/01-variables.js';
 import { lesson as lesson2 } from './lessons/02-functions.js';
+import { lesson as lesson3 } from './lessons/03-control-flow.js';
 
-const lessons = [lesson1, lesson2];       // add each new lesson here, in order
+const lessons = [lesson1, lesson2, lesson3];       // add each new lesson here, in order
 
 const left = document.getElementById('left');
 const right = document.getElementById('right');

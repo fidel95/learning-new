@@ -24,8 +24,20 @@ const WORKER_SOURCE = `
   }
 
   self.onmessage = (event) => {
-    const { code, names, fnNames, probes } = event.data;
+    const { code, names, fnNames, probes, stepNames } = event.data;
     const logs = [];
+    // ---- Loop tracing: at the start of every loop pass we copy the variables we can see. ----
+    const steps = [];
+    function step(loopId, readVars) {
+      if (steps.length >= 400) return;                       // cap: a runaway loop must not eat memory
+      const raw = readVars();
+      const vars = {};
+      for (const k of Object.keys(raw)) {
+        const text = describe(raw[k]).text;
+        if (typeof raw[k] !== 'function') vars[k] = text.length > 40 ? text.slice(0, 37) + '...' : text;
+      }
+      steps.push({ loop: loopId, vars });
+    }
     // ---- Call tracing: every time a traced function starts or ends, we write it down. ----
     const events = [];
     let truncated = false;
@@ -66,9 +78,18 @@ const WORKER_SOURCE = `
       const probeCode = Object.keys(probes)
         .map(k => 'try { __p[' + JSON.stringify(k) + '] = (' + probes[k] + '); } catch (e) { __p[' + JSON.stringify(k) + '] = { __error: String(e && e.message) }; }')
         .join('\\n');
-      const body = '"use strict";\\nconst __s = {}; const __p = {};\\n' + wrapCode + '\\n' + code + '\\n;' + snapshotCode + '\\n' + probeCode + '\\nreturn { __s, __p };';
-      const run = new Function('console', '__trace', body);
-      const packed = run(fakeConsole, trace);
+      // Put a __step(...) call at the top of every for-loop and while-loop body.
+      // It reads every variable name from the file (those not visible there are skipped).
+      let loopId = 0;
+      const reader = '() => { const o = {}; ' +
+        stepNames.map(n => 'try { o[' + JSON.stringify(n) + '] = ' + n + '; } catch (e) {}').join(' ') + ' return o; }';
+      const loopPattern = /\\b(?:for|while)\\s*\\((?:[^()]|\\([^()]*\\))*\\)\\s*\\{/g;
+      const instrumented = stepNames.length
+        ? code.replace(loopPattern, (m) => m + ' __step(' + (loopId++) + ', ' + reader + ');')
+        : code;
+      const body = '"use strict";\\nconst __s = {}; const __p = {};\\n' + wrapCode + '\\n' + instrumented + '\\n;' + snapshotCode + '\\n' + probeCode + '\\nreturn { __s, __p };';
+      const run = new Function('console', '__trace', '__step', body);
+      const packed = run(fakeConsole, trace, step);
       const raw = packed.__s;
       const probeOut = {};
       for (const k of Object.keys(packed.__p)) {
@@ -83,9 +104,9 @@ const WORKER_SOURCE = `
         const v = raw[key];
         values[key] = (typeof v === 'function') ? '[function]' : v;
       }
-      self.postMessage({ ok: true, vars, values, logs, probes: probeOut, events, truncated });
+      self.postMessage({ ok: true, vars, values, logs, probes: probeOut, events, truncated, steps });
     } catch (error) {
-      self.postMessage({ ok: false, error: (error && error.name ? error.name + ': ' : '') + (error && error.message ? error.message : String(error)), logs, events, truncated });
+      self.postMessage({ ok: false, error: (error && error.name ? error.name + ': ' : '') + (error && error.message ? error.message : String(error)), logs, events, truncated, steps });
     }
   };
 `;
@@ -107,6 +128,20 @@ export function declaredFunctions(code) {
   const pattern = /\bfunction\s+([A-Za-z_$][\w$]*)\s*\(/g;
   let match;
   while ((match = pattern.exec(code)) !== null) if (!names.includes(match[1])) names.push(match[1]);
+  return names;
+}
+
+// Names of function parameters, so loop traces can show them too (e.g. n in sumTo(n)).
+export function declaredParams(code) {
+  const names = [];
+  const pattern = /\bfunction\s+[A-Za-z_$][\w$]*\s*\(([^)]*)\)/g;
+  let match;
+  while ((match = pattern.exec(code)) !== null) {
+    for (const raw of match[1].split(',')) {
+      const n = raw.trim().replace(/=.*/, '').trim();
+      if (/^[A-Za-z_$][\w$]*$/.test(n) && !names.includes(n)) names.push(n);
+    }
+  }
   return names;
 }
 
@@ -134,7 +169,7 @@ export function runCode(code, { timeoutMs = 1500, probes = {} } = {}) {
       clearTimeout(timer);
       worker.terminate();
       URL.revokeObjectURL(url);
-      resolve({ source: code, kinds: declaredKinds(code), vars: {}, values: {}, logs: [], probes: {}, events: [], truncated: false, ...result });
+      resolve({ source: code, kinds: declaredKinds(code), vars: {}, values: {}, logs: [], probes: {}, events: [], truncated: false, steps: [], ...result });
     };
 
     const timer = setTimeout(
@@ -143,6 +178,6 @@ export function runCode(code, { timeoutMs = 1500, probes = {} } = {}) {
     );
     worker.onmessage = (e) => finish(e.data);
     worker.onerror = (e) => finish({ ok: false, error: e.message || 'Unknown error' });
-    worker.postMessage({ code, names: declaredNames(code), fnNames: declaredFunctions(code), probes });
+    worker.postMessage({ code, names: declaredNames(code), fnNames: declaredFunctions(code), probes, stepNames: [...new Set([...declaredNames(code), ...declaredParams(code)])] });
   });
 }
