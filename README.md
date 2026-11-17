@@ -16,6 +16,8 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 - `js/terminal.js` — practice terminal UI, three-areas view, commit graph
 - `js/mockserver.js` — a pretend web server (api.learn.test) with realistic status codes
 - `js/httplab.js` — request builder + async API lab with network log
+- `js/db.js` — real SQLite (sql.js, in `vendor/`) in a Web Worker, plus a tiny route framework
+- `js/sqllab.js` — SQL playground, SQL challenge, injection demo, server lab
 - `js/dom.js` — web page lab: sandboxed iframe, live DOM tree, automated click/type tests
 - `js/lessons/` — one file per lesson
 
@@ -27,3 +29,4 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 5. The browser: DOM & events (done)
 6. The terminal & Git (done)
 7. HTTP, APIs & async (done)
+8. Databases & servers (done)

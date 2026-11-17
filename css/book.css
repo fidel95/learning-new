@@ -274,3 +274,12 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .net__bar { height: 5px; background: var(--paper-edge); border-radius: 3px; margin: 0 2px 4px; overflow: hidden; }
 .net__bar span { display: block; height: 100%; background: var(--ink-soft); border-radius: 3px; }
 .net__detail { margin: 4px 2px 6px; }
+
+/* ---------- Databases and servers (lesson 8) ---------- */
+.sqlwrap { overflow-x: auto; margin-bottom: 8px; }
+.sqltable td, .sqltable th { white-space: nowrap; }
+.sqlcard { border: 1.5px solid var(--paper-edge); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; background: rgba(255,255,255,.35); }
+.sqlcard__q { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.45; margin-bottom: 6px; }
+.sqlcard__q .box { flex: none; width: 18px; height: 18px; margin-top: 2px; border: 1.5px solid var(--ink-soft); border-radius: 3px; display: grid; place-items: center; font: 700 13px system-ui; color: transparent; }
+.sqlcard__q.done .box { background: var(--green); border-color: var(--green); color: #fff; }
+.modes { display: flex; flex-direction: column; gap: 4px; margin: 6px 0 10px; font: 14px system-ui; }
