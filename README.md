@@ -52,3 +52,4 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 16. Security: threat modeling and attacks (done): STRIDE lab, XSS lab, attack-then-patch server lab (IDOR, SQLi, mass assignment, SSRF, CSRF)
 17. Authentication and cryptography (done): crack unsalted/salted/PBKDF2 hashes with real timing, write a password hasher, fix a JWT verifier, build a session store with CSRF
 18. Secure development and supply chain (done): dependency triage, secret-scanner challenge, secure code review, audit checklist for your own CRM and site
+19. Big-O and performance (done): complexity detective with counted steps, three speed-up challenges (Set, hash map, binary search) with large hidden inputs, "can it run?" calculator
