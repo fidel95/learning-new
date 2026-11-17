@@ -293,3 +293,24 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .testrow__mark { font-weight: 700; }
 .testrow--ok .testrow__mark { color: var(--green); } .testrow--fail .testrow__mark { color: var(--red); }
 .testrow__err { flex-basis: 100%; color: var(--red); padding-left: 20px; font-size: 12.5px; }
+
+/* ---------- Debugging labs (lesson 10) ---------- */
+.bisect__info { font: 600 13px system-ui; margin-bottom: 6px; color: var(--ink-soft); }
+.bisect { border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; margin-bottom: 8px; }
+.bisect__row { display: grid; grid-template-columns: 22px 64px 1fr auto; gap: 8px; align-items: center; padding: 4px 8px; font: 13px var(--mono); cursor: pointer; border-bottom: 1px solid var(--paper-edge); }
+.bisect__row:last-child { border-bottom: 0; }
+.bisect__row:hover { background: rgba(179,64,47,.07); }
+.bisect__row.is-sel { background: #f6d28b; }
+.bisect__row.is-hint { outline: 2px dashed var(--red); outline-offset: -2px; }
+.bisect__mark { font-weight: 700; text-align: center; color: var(--ink-soft); }
+.bisect__mark--ok { color: var(--green); } .bisect__mark--fail { color: var(--red); }
+.bisect__hash { color: var(--ink-soft); } .bisect__who { color: var(--ink-soft); font-size: 12px; }
+.btn--alt { background: #fff; color: var(--red); }
+.logs { font: 12.5px/1.45 var(--mono); }
+.logline { display: flex; gap: 8px; padding: 2px 4px; border-left: 3px solid transparent; word-break: break-word; }
+.logline--error { border-left-color: var(--red); background: rgba(179,64,47,.08); }
+.logline--warn { border-left-color: #b07b12; background: rgba(176,123,18,.08); }
+.logline__t { color: var(--ink-soft); flex: none; } .logline__lvl { flex: none; width: 42px; font-weight: 700; }
+.diff { padding: 6px 0; } .diff div { padding: 0 10px; white-space: pre-wrap; }
+.diff__add { background: #dff0e0; } .diff__del { background: #f7dcd6; }
+.q__opt--radio { display: block; cursor: pointer; font: 14px var(--serif); }
