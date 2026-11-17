@@ -84,10 +84,32 @@ export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPa
       const top = el('div', { class: 'cell__name' });
       top.append(el('span', {}, name), el('span', { class: 'cell__kind' }, result.kinds[name] || ''));
       cell.append(top);
-      if (v.type === 'array') {
+      if (v.ref) {
+        // Same @number = same object in memory. Color follows the number so aliases match at a glance.
+        const badge = el('span', { class: 'cell__ref', title: 'identity: names with the same @number are the same object' }, '@' + v.ref);
+        badge.style.background = 'hsl(' + ((v.ref * 67) % 360) + ' 55% 45%)';
+        top.append(badge);
+      }
+      let parsed = null;
+      if (v.type === 'array' || v.type === 'object') { try { parsed = JSON.parse(v.text); } catch { parsed = null; } }
+      const isRecord = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
+
+      if (v.type === 'array' && parsed && parsed.length && parsed.every(isRecord)) {
+        // An array of objects reads best as a table: one row per object.
+        const cols = [...new Set(parsed.flatMap((o) => Object.keys(o)))].slice(0, 6);
+        const table = el('table', { class: 'looptable' });
+        const head = el('tr'); head.append(el('th', {}, '#'), ...cols.map((c) => el('th', {}, c)));
+        table.append(head);
+        parsed.slice(0, 8).forEach((o, i) => {
+          const tr = el('tr'); tr.append(el('td', { class: 'looptable__n' }, String(i)));
+          cols.forEach((c) => tr.append(el('td', {}, o[c] === undefined ? '' : JSON.stringify(o[c]))));
+          table.append(tr);
+        });
+        cell.classList.add('cell--wide');
+        cell.append(table, el('div', { class: 'cell__type' }, 'type: array of objects · length ' + parsed.length));
+      } else if (v.type === 'array') {
         // Arrays are drawn as a row of numbered slots: the number is the INDEX (starts at 0).
-        let items = [];
-        try { items = JSON.parse(v.text); } catch { items = []; }
+        const items = parsed || [];
         const row = el('div', { class: 'arr' });
         items.slice(0, 12).forEach((item, i) => {
           const slot = el('div', { class: 'arr__slot' });
@@ -98,6 +120,16 @@ export function mountWorkbench(root, { starter, tasks = [], tasksEl = null, onPa
         if (!items.length) row.append(el('div', { class: 'arr__more' }, 'empty'));
         cell.classList.add('cell--wide');
         cell.append(row, el('div', { class: 'cell__type' }, 'type: array · length ' + items.length));
+      } else if (v.type === 'object' && parsed && isRecord(parsed)) {
+        // Objects are drawn as key: value rows.
+        const box = el('div', { class: 'obj' });
+        for (const [k, val] of Object.entries(parsed)) {
+          const row = el('div', { class: 'obj__row' });
+          row.append(el('span', { class: 'obj__key' }, k), el('span', { class: 'obj__val' }, JSON.stringify(val)));
+          box.append(row);
+        }
+        if (!Object.keys(parsed).length) box.append(el('div', { class: 'arr__more' }, 'empty object'));
+        cell.append(box, el('div', { class: 'cell__type' }, 'type: object'));
       } else {
         cell.append(el('div', { class: 'cell__value' }, v.text), el('div', { class: 'cell__type' }, 'type: ' + v.type));
       }

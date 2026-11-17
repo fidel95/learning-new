@@ -97,7 +97,18 @@ const WORKER_SOURCE = `
         probeOut[k] = (typeof v === 'function' || typeof v === 'symbol') ? String(v) : v;
       }
       const vars = {};
-      for (const key of Object.keys(raw)) vars[key] = describe(raw[key]);
+      // Objects and arrays get an identity number (@1, @2...). Two names showing the SAME number
+      // point at the very same object in memory: that is how you can SEE aliasing.
+      const ids = new Map();
+      for (const key of Object.keys(raw)) {
+        const d = describe(raw[key]);
+        const v = raw[key];
+        if (v !== null && typeof v === 'object') {
+          if (!ids.has(v)) ids.set(v, ids.size + 1);
+          d.ref = ids.get(v);
+        }
+        vars[key] = d;
+      }
       // 'raw' is also sent so lesson tests can compare real values (===), not just text.
       const values = {};
       for (const key of Object.keys(raw)) {

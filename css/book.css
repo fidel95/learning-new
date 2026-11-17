@@ -206,3 +206,10 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .looptable__n { color: var(--ink-soft); background: var(--paper-edge) !important; }
 .looptable__changed { background: #f6d28b !important; animation: flash .7s ease; }
 .loopnote { font: italic 14px var(--serif); color: var(--ink-soft); margin-bottom: 8px; }
+
+/* ---------- Objects + identity badge ---------- */
+.cell__ref { font: 700 11px var(--mono); color: #fff; padding: 0 6px; border-radius: 8px; margin-left: 4px; }
+.obj { padding: 6px 0 2px; }
+.obj__row { display: flex; gap: 10px; padding: 2px 10px; font: 13.5px var(--mono); border-bottom: 1px dashed var(--paper-edge); }
+.obj__key { color: var(--red); min-width: 56px; }
+.obj__val { word-break: break-all; }
