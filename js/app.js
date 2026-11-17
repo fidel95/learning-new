@@ -7,8 +7,9 @@ import { lesson as lesson5 } from './lessons/05-dom.js';
 import { lesson as lesson6 } from './lessons/06-git.js';
 import { lesson as lesson7 } from './lessons/07-http.js';
 import { lesson as lesson8 } from './lessons/08-databases.js';
+import { lesson as lesson9 } from './lessons/09-typescript-testing.js';
 
-const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8];       // add each new lesson here, in order
+const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9];       // add each new lesson here, in order
 
 const left = document.getElementById('left');
 const right = document.getElementById('right');
