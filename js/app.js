@@ -19,8 +19,9 @@ import { lesson as lesson17 } from './lessons/17-authentication.js';
 import { lesson as lesson18 } from './lessons/18-secure-dev.js';
 import { lesson as lesson19 } from './lessons/19-big-o.js';
 import { lesson as lesson20 } from './lessons/20-data-structures.js';
+import { lesson as lesson21 } from './lessons/21-sorting-recursion-dp.js';
 
-const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11, lesson12, lesson13, lesson14, lesson15, lesson16, lesson17, lesson18, lesson19, lesson20];       // add each new lesson here, in order
+const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11, lesson12, lesson13, lesson14, lesson15, lesson16, lesson17, lesson18, lesson19, lesson20, lesson21];       // add each new lesson here, in order
 
 const left = document.getElementById('left');
 const right = document.getElementById('right');

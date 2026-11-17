@@ -54,4 +54,6 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 18. Secure development and supply chain (done): dependency triage, secret-scanner challenge, secure code review, audit checklist for your own CRM and site
 19. Big-O and performance (done): complexity detective with counted steps, three speed-up challenges (Set, hash map, binary search) with large hidden inputs, "can it run?" calculator
 20. Data structures (done): stack (balanced brackets), O(1) queue, hand-built resizing hash map, O(1) LRU cache, binary min-heap, all graded on correctness and large hidden inputs
+21. Recursion, sorting and dynamic programming (done): flatten, permutations, sorting race with counted comparisons, stable merge sort, memoized climbStairs, coin-change table
+
 
