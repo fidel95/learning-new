@@ -226,3 +226,28 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .dtree li { font-size: 13px; line-height: 1.5; margin: 0; }
 .dtree__tag { color: var(--red); font-weight: 600; }
 .dtree__text { color: var(--ink-soft); font-style: italic; }
+
+/* ---------- Practice terminal (lesson 6) ---------- */
+.term { background: #231a12; color: #f3ead6; font: 13px/1.5 var(--mono); padding: 10px 12px 4px; border-radius: 6px 6px 0 0; height: 230px; overflow: auto; white-space: pre-wrap; cursor: text; }
+.term__line { min-height: 1.5em; word-break: break-word; }
+.term__cmd { color: #f6d28b; }
+.term__err { color: #ff9c8a; }
+.term__muted { color: #a8957a; }
+.term__form { display: flex; gap: 8px; align-items: center; background: #231a12; padding: 0 12px 10px; border-radius: 0 0 6px 6px; font: 13px var(--mono); }
+.term__prompt { color: #8fd19e; white-space: nowrap; }
+.term__input { flex: 1; min-width: 0; background: transparent; border: 0; color: #f3ead6; font: 13px var(--mono); padding: 2px 0; }
+.term__input:focus { outline: none; }
+.term__form:focus-within { box-shadow: 0 0 0 2px var(--red); }
+
+.areas { display: flex; align-items: stretch; gap: 6px; flex-wrap: wrap; }
+.area { flex: 1 1 130px; min-width: 130px; border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; padding: 6px 8px; }
+.area__title { font: 700 12.5px system-ui; }
+.area__sub { font: italic 11.5px var(--serif); color: var(--ink-soft); margin-bottom: 4px; }
+.area__row { font: 12.5px var(--mono); padding: 1px 0; word-break: break-all; }
+.area__row--new { color: var(--red); } .area__row--mod { color: #b07b12; } .area__row--clean { color: var(--green); }
+.area__row--staged { color: var(--green); font-weight: 700; } .area__row--conflict { color: #fff; background: var(--red); padding: 1px 4px; }
+.area__row--commit { color: var(--ink); }
+.area__empty { font: italic 13px var(--serif); color: var(--ink-soft); }
+.area__arrow { align-self: center; font: 700 11px system-ui; color: var(--ink-soft); text-align: center; max-width: 56px; }
+.graph { overflow-x: auto; background: #fff9ea; border: 1.5px solid var(--ink); border-radius: 4px; padding: 4px; }
+.graph svg { display: block; }
