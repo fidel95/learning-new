@@ -251,3 +251,26 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .area__arrow { align-self: center; font: 700 11px system-ui; color: var(--ink-soft); text-align: center; max-width: 56px; }
 .graph { overflow-x: auto; background: #fff9ea; border: 1.5px solid var(--ink); border-radius: 4px; padding: 4px; }
 .graph svg { display: block; }
+
+/* ---------- HTTP labs (lesson 7) ---------- */
+.ex { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.chip { font: 600 12px system-ui; padding: 4px 10px; border-radius: 999px; border: 1.5px solid var(--ink-soft); background: var(--code-bg); color: var(--ink); cursor: pointer; }
+.chip:hover { border-color: var(--red); color: var(--red); }
+.reqline { display: flex; gap: 6px; }
+.reqline select, .reqline input { font: 14px var(--mono); padding: 6px 8px; background: var(--code-bg); border: 1px solid var(--paper-edge); border-radius: 4px; color: var(--ink); }
+.reqline input { flex: 1; min-width: 0; }
+.raw { font: 12.5px/1.5 var(--mono); background: var(--code-bg); border: 1px solid var(--paper-edge); border-radius: 4px; padding: 8px 10px; margin: 0 0 8px; white-space: pre-wrap; word-break: break-word; max-height: 220px; overflow: auto; }
+.status { font: 700 13px var(--mono); padding: 5px 10px; border-radius: 4px; color: #fff; margin-bottom: 6px; }
+.status--good { background: var(--green); } .status--info { background: #3a6ea5; } .status--warn { background: #b07b12; } .status--bad { background: var(--red); }
+.muted { font: italic 14px var(--serif); color: var(--ink-soft); }
+.net { margin-bottom: 8px; }
+.net__row { border-bottom: 1px solid var(--paper-edge); }
+.net__head { display: grid; grid-template-columns: 22px 56px 1fr 52px 64px; gap: 6px; padding: 4px 2px; font: 12.5px var(--mono); cursor: pointer; align-items: center; }
+.net__head:hover { background: rgba(179,64,47,.07); }
+.net__m { font-weight: 700; } .net__n { color: var(--ink-soft); } .net__u { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.net__s { text-align: center; color: #fff; border-radius: 3px; padding: 0 4px; }
+.net__s--good { background: var(--green); } .net__s--info { background: #3a6ea5; } .net__s--warn { background: #b07b12; } .net__s--bad { background: var(--red); }
+.net__t { color: var(--ink-soft); text-align: right; }
+.net__bar { height: 5px; background: var(--paper-edge); border-radius: 3px; margin: 0 2px 4px; overflow: hidden; }
+.net__bar span { display: block; height: 100%; background: var(--ink-soft); border-radius: 3px; }
+.net__detail { margin: 4px 2px 6px; }

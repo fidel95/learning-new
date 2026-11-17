@@ -14,6 +14,8 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 - `js/workbench.js` — editor, memory diagram, console, checklist, quiz
 - `js/gitsim.js` — a small simulated shell + Git (no browser code, testable in Node)
 - `js/terminal.js` — practice terminal UI, three-areas view, commit graph
+- `js/mockserver.js` — a pretend web server (api.learn.test) with realistic status codes
+- `js/httplab.js` — request builder + async API lab with network log
 - `js/dom.js` — web page lab: sandboxed iframe, live DOM tree, automated click/type tests
 - `js/lessons/` — one file per lesson
 
@@ -24,3 +26,4 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 4. Objects, references & JSON (done)
 5. The browser: DOM & events (done)
 6. The terminal & Git (done)
+7. HTTP, APIs & async (done)
