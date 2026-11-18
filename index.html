@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Engineer's Book</title>
   <meta name="description" content="An interactive 3D book that teaches software engineering by doing.">
+  <script>
+    // Apply the saved/system theme before first paint so there is no flash of the wrong colours.
+    (function () {
+      var pref = 'auto'; try { pref = localStorage.getItem('learning-new:theme') || 'auto'; } catch (e) {}
+      var dark = pref === 'dark' || (pref === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    })();
+  </script>
   <link rel="stylesheet" href="css/book.css">
 </head>
 <body>
@@ -12,9 +20,12 @@
   <header class="hud">
     <div class="hud__brand">The Engineer's Book</div>
     <div class="hud__lesson" id="lessonTitle"></div>
+    <div class="hud__right">
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Change colour theme"></button>
     <div class="hud__stats">
       <span title="Experience points" id="xp">0 XP</span>
       <span title="Days in a row you studied" id="streak">0-day streak</span>
+    </div>
     </div>
   </header>
 

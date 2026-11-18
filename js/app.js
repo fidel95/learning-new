@@ -28,6 +28,7 @@ import { lesson as lesson26 } from './lessons/26-distributed.js';
 import { lesson as lesson27 } from './lessons/27-cloud-iac.js';
 import { lesson as lesson28 } from './lessons/28-frontend.js';
 import { lesson as lesson29 } from './lessons/29-ai-engineering.js';
+import { initTheme } from './theme.js';
 import { lesson as lesson30 } from './lessons/30-open-source.js';
 
 const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, lesson10, lesson11, lesson12, lesson13, lesson14, lesson15, lesson16, lesson17, lesson18, lesson19, lesson20, lesson21, lesson22, lesson23, lesson24, lesson25, lesson26, lesson27, lesson28, lesson29, lesson30];       // add each new lesson here, in order
@@ -35,6 +36,7 @@ const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, 
 const left = document.getElementById('left');
 const right = document.getElementById('right');
 const leaf = document.getElementById('leaf');
+initTheme();
 const xpEl = document.getElementById('xp');
 const streakEl = document.getElementById('streak');
 const picker = document.getElementById('lessonTitle');

@@ -3,17 +3,51 @@
    Colors live in variables (--name) so you change them in one place.
 ------------------------------------------------------------------- */
 :root {
-  --desk: #6b7a80;
-  --paper: #f3ead6;
-  --paper-edge: #e3d6b8;
-  --ink: #2b2118;
-  --ink-soft: #5b4e40;
+  color-scheme: light;
+  --desk: #7d8a8f;
+  --paper: #f1e9d8;
+  --paper-edge: #ddd0b3;
+  --ink: #33291f;
+  --ink-soft: #62554a;
   --red: #b3402f;
+  --btn: #b3402f;
   --green: #3f7d4e;
+  --amber: #946310;
+  --blue: #3a6ea5;
   --cover: #5a3a22;
-  --code-bg: #fbf6ea;
+  --code-bg: #f8f2e4;
+  --cell: #fbf5e6;
+  --card: rgba(255,255,255,.35);
+  --hl: #f2d79c;
+  --ok-bg: #e1eddc;
+  --bad-bg: #f3dad3;
+  --warn-bg: #f4e7c2;
+  --leaf: #d9cba9;
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+/* Night: dim warm "lamp-lit" paper, no pure white, lighter accents so contrast stays readable. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --desk: #14181b;
+  --paper: #25211b;
+  --paper-edge: #3b352b;
+  --ink: #e4dac8;
+  --ink-soft: #a99d89;
+  --red: #e5806e;
+  --btn: #b5473a;
+  --green: #7fbf8e;
+  --amber: #d9a441;
+  --blue: #7fa8d6;
+  --cover: #2c1e12;
+  --code-bg: #1d1a15;
+  --cell: #2e2920;
+  --card: rgba(255,255,255,.04);
+  --hl: #5b4a1f;
+  --ok-bg: #26382a;
+  --bad-bg: #44251f;
+  --warn-bg: #43381a;
+  --leaf: #1d1a15;
 }
 
 * { box-sizing: border-box; }
@@ -72,7 +106,7 @@ body {
 /* The turning page: a paper sheet that swings around the spine. */
 .leaf {
   position: absolute; top: 10px; bottom: 14px; left: 50%; width: calc(50% - 12px);
-  background: linear-gradient(90deg, #d9cba9, var(--paper) 30%);
+  background: linear-gradient(90deg, var(--leaf), var(--paper) 30%);
   transform-origin: left center; transform: rotateY(0deg);
   opacity: 0; pointer-events: none; border-radius: 0 4px 4px 0;
 }
@@ -122,7 +156,7 @@ pre code { border: 0; padding: 0; background: none; }
 .bar { display: flex; gap: 10px; align-items: center; margin: 8px 0 12px; font: 13px system-ui; color: var(--ink-soft); }
 button.btn, .link-btn {
   font: 600 13px system-ui; cursor: pointer; border-radius: 4px; padding: 7px 14px;
-  border: 1.5px solid var(--red); background: var(--red); color: #fff;
+  border: 1.5px solid var(--btn); background: var(--btn); color: #fff;
 }
 button.btn:hover { filter: brightness(1.08); }
 button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
@@ -133,7 +167,7 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .memory { display: flex; flex-wrap: wrap; gap: 10px; min-height: 76px; }
 .memory .empty { font-style: italic; color: var(--ink-soft); font-size: 14px; }
 .cell {
-  min-width: 108px; border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea;
+  min-width: 108px; border: 1.5px solid var(--ink); border-radius: 4px; background: var(--cell);
   overflow: hidden; animation: pop .35s ease;
 }
 .cell__name { font: 700 12.5px var(--mono); padding: 3px 8px; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; gap: 8px; }
@@ -142,7 +176,7 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .cell__type { font: italic 11.5px var(--serif); padding: 0 8px 5px; color: var(--ink-soft); }
 .cell.changed { animation: flash .7s ease; }
 @keyframes pop   { from { transform: scale(.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes flash { 0%, 100% { background: #fff9ea; } 35% { background: #f6d28b; } }
+@keyframes flash { 0%, 100% { background: var(--cell); } 35% { background: var(--hl); } }
 
 .console { font: 13px/1.5 var(--mono); background: #231a12; color: #f3ead6; border-radius: 4px; padding: 8px 12px; min-height: 44px; white-space: pre-wrap; }
 .console .err { color: #ff9c8a; }
@@ -156,8 +190,8 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
   background: var(--code-bg); border: 1.5px solid var(--paper-edge); border-radius: 4px; color: var(--ink);
 }
 .q__opt:hover:not(:disabled) { border-color: var(--red); }
-.q__opt.right { border-color: var(--green); background: #e3f1e5; }
-.q__opt.wrong { border-color: var(--red); background: #f7dcd6; }
+.q__opt.right { border-color: var(--green); background: var(--ok-bg); }
+.q__opt.wrong { border-color: var(--red); background: var(--bad-bg); }
 .q__why { font-size: 14px; margin: 6px 0 0; color: var(--ink-soft); }
 
 /* ---------- Page footers (back / turn) ---------- */
@@ -182,9 +216,9 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 
 /* ---------- Call stack panel ---------- */
 .stack { display: flex; flex-direction: column-reverse; gap: 4px; min-height: 40px; }
-.frame { border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; padding: 5px 10px; font: 13.5px var(--mono); animation: pop .3s ease; }
+.frame { border: 1.5px solid var(--ink); border-radius: 4px; background: var(--cell); padding: 5px 10px; font: 13.5px var(--mono); animation: pop .3s ease; }
 .frame--base { background: var(--paper-edge); border-style: dashed; font-style: italic; font-family: var(--serif); color: var(--ink-soft); }
-.frame--top { background: #f6d28b; border-color: var(--red); font-weight: 700; }
+.frame--top { background: var(--hl); border-color: var(--red); font-weight: 700; }
 .stack__caption { font: italic 14px var(--serif); margin: 8px 0 0; min-height: 22px; }
 
 /* ---------- Lesson picker ---------- */
@@ -194,7 +228,7 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 /* ---------- Arrays in memory ---------- */
 .cell--wide { min-width: 0; }
 .arr { display: flex; flex-wrap: wrap; gap: 0; padding: 8px 8px 2px; }
-.arr__slot { border: 1.5px solid var(--ink); margin-left: -1.5px; text-align: center; min-width: 38px; background: #fff; }
+.arr__slot { border: 1.5px solid var(--ink); margin-left: -1.5px; text-align: center; min-width: 38px; background: var(--cell); }
 .arr__idx { font: 700 10.5px system-ui; background: var(--paper-edge); color: var(--ink-soft); border-bottom: 1.5px solid var(--ink); padding: 1px 0; }
 .arr__val { font: 14px var(--mono); padding: 4px 6px; }
 .arr__more { align-self: center; padding-left: 8px; font: italic 13px var(--serif); color: var(--ink-soft); }
@@ -202,9 +236,9 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 /* ---------- Loop trace table ---------- */
 .looptable { border-collapse: collapse; font: 13px var(--mono); margin-bottom: 8px; }
 .looptable th { background: var(--ink); color: var(--paper); padding: 3px 12px; text-align: left; font-weight: 600; }
-.looptable td { border: 1px solid var(--paper-edge); background: #fff9ea; padding: 3px 12px; }
+.looptable td { border: 1px solid var(--paper-edge); background: var(--cell); padding: 3px 12px; }
 .looptable__n { color: var(--ink-soft); background: var(--paper-edge) !important; }
-.looptable__changed { background: #f6d28b !important; animation: flash .7s ease; }
+.looptable__changed { background: var(--hl) !important; animation: flash .7s ease; }
 .loopnote { font: italic 14px var(--serif); color: var(--ink-soft); margin-bottom: 8px; }
 
 /* ---------- Objects + identity badge ---------- */
@@ -230,7 +264,7 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 /* ---------- Practice terminal (lesson 6) ---------- */
 .term { background: #231a12; color: #f3ead6; font: 13px/1.5 var(--mono); padding: 10px 12px 4px; border-radius: 6px 6px 0 0; height: 230px; overflow: auto; white-space: pre-wrap; cursor: text; }
 .term__line { min-height: 1.5em; word-break: break-word; }
-.term__cmd { color: #f6d28b; }
+.term__cmd { color: var(--hl); }
 .term__err { color: #ff9c8a; }
 .term__muted { color: #a8957a; }
 .term__form { display: flex; gap: 8px; align-items: center; background: #231a12; padding: 0 12px 10px; border-radius: 0 0 6px 6px; font: 13px var(--mono); }
@@ -240,16 +274,16 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .term__form:focus-within { box-shadow: 0 0 0 2px var(--red); }
 
 .areas { display: flex; align-items: stretch; gap: 6px; flex-wrap: wrap; }
-.area { flex: 1 1 130px; min-width: 130px; border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; padding: 6px 8px; }
+.area { flex: 1 1 130px; min-width: 130px; border: 1.5px solid var(--ink); border-radius: 4px; background: var(--cell); padding: 6px 8px; }
 .area__title { font: 700 12.5px system-ui; }
 .area__sub { font: italic 11.5px var(--serif); color: var(--ink-soft); margin-bottom: 4px; }
 .area__row { font: 12.5px var(--mono); padding: 1px 0; word-break: break-all; }
-.area__row--new { color: var(--red); } .area__row--mod { color: #b07b12; } .area__row--clean { color: var(--green); }
+.area__row--new { color: var(--red); } .area__row--mod { color: var(--amber); } .area__row--clean { color: var(--green); }
 .area__row--staged { color: var(--green); font-weight: 700; } .area__row--conflict { color: #fff; background: var(--red); padding: 1px 4px; }
 .area__row--commit { color: var(--ink); }
 .area__empty { font: italic 13px var(--serif); color: var(--ink-soft); }
 .area__arrow { align-self: center; font: 700 11px system-ui; color: var(--ink-soft); text-align: center; max-width: 56px; }
-.graph { overflow-x: auto; background: #fff9ea; border: 1.5px solid var(--ink); border-radius: 4px; padding: 4px; }
+.graph { overflow-x: auto; background: var(--cell); border: 1.5px solid var(--ink); border-radius: 4px; padding: 4px; }
 .graph svg { display: block; }
 
 /* ---------- HTTP labs (lesson 7) ---------- */
@@ -261,7 +295,7 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .reqline input { flex: 1; min-width: 0; }
 .raw { font: 12.5px/1.5 var(--mono); background: var(--code-bg); border: 1px solid var(--paper-edge); border-radius: 4px; padding: 8px 10px; margin: 0 0 8px; white-space: pre-wrap; word-break: break-word; max-height: 220px; overflow: auto; }
 .status { font: 700 13px var(--mono); padding: 5px 10px; border-radius: 4px; color: #fff; margin-bottom: 6px; }
-.status--good { background: var(--green); } .status--info { background: #3a6ea5; } .status--warn { background: #b07b12; } .status--bad { background: var(--red); }
+.status--good { background: var(--green); } .status--info { background: var(--blue); } .status--warn { background: var(--amber); } .status--bad { background: var(--red); }
 .muted { font: italic 14px var(--serif); color: var(--ink-soft); }
 .net { margin-bottom: 8px; }
 .net__row { border-bottom: 1px solid var(--paper-edge); }
@@ -269,7 +303,7 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .net__head:hover { background: rgba(179,64,47,.07); }
 .net__m { font-weight: 700; } .net__n { color: var(--ink-soft); } .net__u { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .net__s { text-align: center; color: #fff; border-radius: 3px; padding: 0 4px; }
-.net__s--good { background: var(--green); } .net__s--info { background: #3a6ea5; } .net__s--warn { background: #b07b12; } .net__s--bad { background: var(--red); }
+.net__s--good { background: var(--green); } .net__s--info { background: var(--blue); } .net__s--warn { background: var(--amber); } .net__s--bad { background: var(--red); }
 .net__t { color: var(--ink-soft); text-align: right; }
 .net__bar { height: 5px; background: var(--paper-edge); border-radius: 3px; margin: 0 2px 4px; overflow: hidden; }
 .net__bar span { display: block; height: 100%; background: var(--ink-soft); border-radius: 3px; }
@@ -278,7 +312,7 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 /* ---------- Databases and servers (lesson 8) ---------- */
 .sqlwrap { overflow-x: auto; margin-bottom: 8px; }
 .sqltable td, .sqltable th { white-space: nowrap; }
-.sqlcard { border: 1.5px solid var(--paper-edge); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; background: rgba(255,255,255,.35); }
+.sqlcard { border: 1.5px solid var(--paper-edge); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; background: var(--card); }
 .sqlcard__q { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.45; margin-bottom: 6px; }
 .sqlcard__q .box { flex: none; width: 18px; height: 18px; margin-top: 2px; border: 1.5px solid var(--ink-soft); border-radius: 3px; display: grid; place-items: center; font: 700 13px system-ui; color: transparent; }
 .sqlcard__q.done .box { background: var(--green); border-color: var(--green); color: #fff; }
@@ -296,30 +330,30 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 
 /* ---------- Debugging labs (lesson 10) ---------- */
 .bisect__info { font: 600 13px system-ui; margin-bottom: 6px; color: var(--ink-soft); }
-.bisect { border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; margin-bottom: 8px; }
+.bisect { border: 1.5px solid var(--ink); border-radius: 4px; background: var(--cell); margin-bottom: 8px; }
 .bisect__row { display: grid; grid-template-columns: 22px 64px 1fr auto; gap: 8px; align-items: center; padding: 4px 8px; font: 13px var(--mono); cursor: pointer; border-bottom: 1px solid var(--paper-edge); }
 .bisect__row:last-child { border-bottom: 0; }
 .bisect__row:hover { background: rgba(179,64,47,.07); }
-.bisect__row.is-sel { background: #f6d28b; }
+.bisect__row.is-sel { background: var(--hl); }
 .bisect__row.is-hint { outline: 2px dashed var(--red); outline-offset: -2px; }
 .bisect__mark { font-weight: 700; text-align: center; color: var(--ink-soft); }
 .bisect__mark--ok { color: var(--green); } .bisect__mark--fail { color: var(--red); }
 .bisect__hash { color: var(--ink-soft); } .bisect__who { color: var(--ink-soft); font-size: 12px; }
-.btn--alt { background: #fff; color: var(--red); }
+.btn--alt { background: var(--cell); color: var(--red); }
 .logs { font: 12.5px/1.45 var(--mono); }
 .logline { display: flex; gap: 8px; padding: 2px 4px; border-left: 3px solid transparent; word-break: break-word; }
 .logline--error { border-left-color: var(--red); background: rgba(179,64,47,.08); }
-.logline--warn { border-left-color: #b07b12; background: rgba(176,123,18,.08); }
+.logline--warn { border-left-color: var(--amber); background: rgba(176,123,18,.08); }
 .logline__t { color: var(--ink-soft); flex: none; } .logline__lvl { flex: none; width: 42px; font-weight: 700; }
 .diff { padding: 6px 0; } .diff div { padding: 0 10px; white-space: pre-wrap; }
-.diff__add { background: #dff0e0; } .diff__del { background: #f7dcd6; }
+.diff__add { background: var(--ok-bg); } .diff__del { background: var(--bad-bg); }
 .q__opt--radio { display: block; cursor: pointer; font: 14px var(--serif); }
 
 /* ---------- Design metrics (lesson 11) ---------- */
 .metric { text-align: center; font-weight: 700; }
-.metric--ok { background: #e3f1e5 !important; color: var(--green); }
-.metric--warn { background: #f8ecc8 !important; color: #8a5d00; }
-.metric--bad { background: #f7dcd6 !important; color: var(--red); }
+.metric--ok { background: var(--ok-bg) !important; color: var(--green); }
+.metric--warn { background: var(--warn-bg) !important; color: var(--amber); }
+.metric--bad { background: var(--bad-bg) !important; color: var(--red); }
 
 /* ---------- System design lab (lesson 12) ---------- */
 .syslab__controls { display: grid; gap: 6px; margin-bottom: 10px; }
@@ -328,21 +362,21 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .syslab__row select { grid-column: 2 / 4; font: 13px system-ui; padding: 4px; background: var(--code-bg); border: 1px solid var(--paper-edge); border-radius: 4px; color: var(--ink); }
 .syslab__row input[type=checkbox] { justify-self: start; grid-column: 2; }
 .syslab__diagram { display: flex; flex-wrap: wrap; gap: 4px; align-items: stretch; margin-bottom: 10px; }
-.tier { flex: 1 1 78px; min-width: 78px; border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; padding: 5px 6px; text-align: center; }
-.tier--hot { border-color: var(--red); background: #f7dcd6; }
+.tier { flex: 1 1 78px; min-width: 78px; border: 1.5px solid var(--ink); border-radius: 4px; background: var(--cell); padding: 5px 6px; text-align: center; }
+.tier--hot { border-color: var(--red); background: var(--bad-bg); }
 .tier__t { font: 700 12px system-ui; } .tier__s { font: italic 11px var(--serif); color: var(--ink-soft); margin-bottom: 3px; }
 .tier__bar { height: 8px; background: var(--paper-edge); border-radius: 4px; overflow: hidden; }
-.tier__bar span { display: block; height: 100%; } .tier__bar .is-ok { background: var(--green); } .tier__bar .is-warm { background: #b07b12; } .tier__bar .is-hot, .tier__bar .is-over { background: var(--red); }
+.tier__bar span { display: block; height: 100%; } .tier__bar .is-ok { background: var(--green); } .tier__bar .is-warm { background: var(--amber); } .tier__bar .is-hot, .tier__bar .is-over { background: var(--red); }
 .tier__u { font: 11px var(--mono); margin-top: 2px; }
 .tier__arrow { align-self: center; font-weight: 700; color: var(--ink-soft); }
 .syslab__metrics { display: grid; gap: 3px; margin-bottom: 8px; }
 .syslab__metric { display: flex; justify-content: space-between; font: 13.5px system-ui; border-bottom: 1px dashed var(--paper-edge); padding: 2px 0; }
-.syslab__metric b.ok { color: var(--green); } .syslab__metric b.warn { color: #b07b12; } .syslab__metric b.bad { color: var(--red); }
+.syslab__metric b.ok { color: var(--green); } .syslab__metric b.warn { color: var(--amber); } .syslab__metric b.bad { color: var(--red); }
 .syslab__bottleneck { font: italic 14px var(--serif); margin-top: 4px; }
 
 /* ---------- Teamwork labs (lesson 14) ---------- */
 .review__head { margin-bottom: 6px; }
-.review { border: 1.5px solid var(--ink); border-radius: 4px; background: #fff9ea; margin: 6px 0 10px; overflow: hidden; }
+.review { border: 1.5px solid var(--ink); border-radius: 4px; background: var(--cell); margin: 6px 0 10px; overflow: hidden; }
 .review__line { border-bottom: 1px solid var(--paper-edge); }
 .review__line:last-child { border-bottom: 0; }
 .review__row { display: grid; grid-template-columns: 30px 18px 1fr; gap: 6px; padding: 1px 6px; font: 12.5px/1.5 var(--mono); cursor: pointer; }
@@ -353,21 +387,21 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 .review__form { display: flex; gap: 6px; padding: 6px; background: var(--paper-edge); }
 .review__form select { font: 13px system-ui; }
 .review__form input { flex: 1; min-width: 0; }
-.review__comment { margin: 2px 6px 6px 36px; padding: 5px 9px; border-left: 3px solid var(--ink-soft); background: #fff; font: 14px var(--serif); }
+.review__comment { margin: 2px 6px 6px 36px; padding: 5px 9px; border-left: 3px solid var(--ink-soft); background: var(--cell); font: 14px var(--serif); }
 .review__comment--bug, .review__comment--security { border-left-color: var(--red); }
-.review__comment--design { border-left-color: #b07b12; }
+.review__comment--design { border-left-color: var(--amber); }
 .review__comment--praise { border-left-color: var(--green); }
 .plan { display: grid; gap: 4px; margin-bottom: 10px; }
 .plan__row { display: grid; grid-template-columns: 20px 1fr 40px 110px 74px; gap: 8px; align-items: center; font: 13.5px system-ui; padding: 3px 4px; border-bottom: 1px dashed var(--paper-edge); cursor: pointer; }
 .plan__d { font-family: var(--mono); } .plan__v { text-align: right; color: var(--green); font-weight: 700; }
-.plan__u { font: italic 12px var(--serif); } .plan__u--high { color: var(--red); } .plan__u--medium { color: #b07b12; } .plan__u--low { color: var(--green); }
+.plan__u { font: italic 12px var(--serif); } .plan__u--high { color: var(--red); } .plan__u--medium { color: var(--amber); } .plan__u--low { color: var(--green); }
 
 /* ---------- Capstone (lesson 15) ---------- */
 .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 10px; }
 .project { text-align: left; font: 13px/1.35 var(--serif); padding: 8px 10px; border: 1.5px solid var(--paper-edge); background: var(--code-bg); border-radius: 6px; cursor: pointer; color: var(--ink); display: flex; flex-direction: column; gap: 3px; }
-.project b { font: 700 14px system-ui; } .project:hover { border-color: var(--red); } .project.is-on { border-color: var(--red); background: #f6e2dc; }
+.project b { font: 700 14px system-ui; } .project:hover { border-color: var(--red); } .project.is-on { border-color: var(--red); background: var(--bad-bg); }
 .docmd { max-height: 220px; }
-.milestone { border: 1.5px solid var(--paper-edge); border-radius: 6px; padding: 6px 10px; margin: 8px 0; background: rgba(255,255,255,.35); }
+.milestone { border: 1.5px solid var(--paper-edge); border-radius: 6px; padding: 6px 10px; margin: 8px 0; background: var(--card); }
 .milestone summary { cursor: pointer; display: flex; justify-content: space-between; gap: 10px; font: 14px system-ui; }
 .milestone__n { font: 600 12px var(--mono); color: var(--ink-soft); }
 .milestone__item { display: flex; gap: 8px; align-items: flex-start; font: 14.5px/1.45 var(--serif); padding: 3px 0; cursor: pointer; }
@@ -376,5 +410,23 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 /* ---------- Security labs (lesson 16) ---------- */
 .tm__row { display: grid; gap: 6px; margin-top: 6px; }
 .tm__row select { font: 13px system-ui; padding: 5px; background: var(--code-bg); border: 1px solid var(--paper-edge); border-radius: 4px; color: var(--ink); max-width: 100%; }
-.tm--ok { border-color: var(--green) !important; background: #e8f3ea !important; }
+.tm--ok { border-color: var(--green) !important; background: var(--ok-bg) !important; }
 .tm--bad { border-color: var(--red) !important; }
+
+/* ---------- Theme toggle ---------- */
+.hud__right { display: flex; align-items: center; gap: 12px; }
+.theme-btn { font: 600 13px system-ui, sans-serif; color: #e9eef0; background: rgba(255,255,255,.14); border: 0; border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.theme-btn:hover { background: rgba(255,255,255,.24); }
+:root[data-theme="dark"] .hud { background: rgba(255,255,255,.04); }
+:root[data-theme="dark"] .book { box-shadow: 0 30px 40px -10px rgba(0,0,0,.7), 0 2px 0 #170f08; }
+:root[data-theme="dark"] .page--left  { box-shadow: inset -26px 0 30px -22px rgba(0,0,0,.6); }
+:root[data-theme="dark"] .page--right { box-shadow: inset  26px 0 30px -22px rgba(0,0,0,.6); }
+:root[data-theme="dark"] .cell__name, :root[data-theme="dark"] .looptable th { background: #4a4234; color: var(--ink); }
+:root[data-theme="dark"] .console, :root[data-theme="dark"] .term, :root[data-theme="dark"] .term__form { background: #15130f; }
+:root[data-theme="dark"] .hud select option { color: #e4dac8; background: #25211b; }
+/* Charts drawn with fixed light-theme colours keep their own light paper in night mode. */
+:root[data-theme="dark"] .page svg { background: #f1e9d8; border-radius: 4px; }
+:root[data-theme="dark"] .graph svg { background: none; }
+:root[data-theme="dark"] .status, :root[data-theme="dark"] .net__s, :root[data-theme="dark"] .cell__ref,
+:root[data-theme="dark"] .tasks li.done .box, :root[data-theme="dark"] .sqlcard__q.done .box, :root[data-theme="dark"] .area__row--conflict { color: #14181b; }
+:root[data-theme="dark"] .status--info { background: #5f8fc2; }

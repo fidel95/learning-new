@@ -2,3 +2,4 @@
 node_modules
 .env
 .dev.vars
+.claude/settings.local.json
