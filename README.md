@@ -57,6 +57,7 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 21. Recursion, sorting and dynamic programming (done): flatten, permutations, sorting race with counted comparisons, stable merge sort, memoized climbStairs, coin-change table
 22. Trees and graphs (done): level-order, real BST, BFS maze path, flood-fill islands, Dijkstra, topological build order, animated maze explorer
 23. Problem-solving patterns (done): pattern-matching lab, sliding windows, prefix sums, interval merge, monotonic stack, canonical-key grouping. Completes Part 4
+24. Concurrency (done): race-condition lab (lost updates), build a mutex, bounded concurrency (mapLimit), deadlock lab, ordered-lock transfers, idempotency keys. Starts Part 5
 
 
 
