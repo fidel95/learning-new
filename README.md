@@ -60,6 +60,7 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 24. Concurrency (done): race-condition lab (lost updates), build a mutex, bounded concurrency (mapLimit), deadlock lab, ordered-lock transfers, idempotency keys. Starts Part 5
 25. Databases in depth (done): indexes and query plans on 100k rows, isolation-anomaly simulator, atomic and optimistic updates, zero-downtime migration ordering
 26. Distributed systems (done): cluster partition/repair lab, vector clocks, quorum tuning, resilient consumer. Completes Part 5
+27. Cloud, containers and IaC (done): Docker layer-cache lab, infrastructure planner (plan/apply diff), release pipeline ordering. Starts Part 6
 
 
 
