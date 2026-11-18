@@ -61,6 +61,9 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 25. Databases in depth (done): indexes and query plans on 100k rows, isolation-anomaly simulator, atomic and optimistic updates, zero-downtime migration ordering
 26. Distributed systems (done): cluster partition/repair lab, vector clocks, quorum tuning, resilient consumer. Completes Part 5
 27. Cloud, containers and IaC (done): Docker layer-cache lab, infrastructure planner (plan/apply diff), release pipeline ordering. Starts Part 6
+28. Front end and web performance (done): store, debounce, virtual list, accessibility checker, Web Vitals
+29. Engineering with AI (done): bug hunt, catch-the-bug tests, eval harness, prompt-injection lab
+30. Open-source capstone (done): repo expedition, workflow ordering, PR writer, your real PR tracker. Completes Part 6
 
 
 

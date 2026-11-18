@@ -60,3 +60,6 @@ Format of every lesson (unchanged): left page explains like a professor and warn
 ## Pace
 
 Each lesson is the same size as the ones you have done (about 1 to 2 hours of real work). Parts 3 to 6 are 15 lessons: roughly 4 to 6 weeks at one lesson every 2 or 3 days.
+
+
+> **Status 2026-11-17:** Lessons 1-30 are built and live. Remaining ideas: the "Upgrades to the book itself" list above (review mode, boss fights, glossary/search, dashboard, mobile polish, export).
