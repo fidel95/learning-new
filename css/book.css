@@ -200,8 +200,12 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 
 /* ---------- Phones: no 3D, pages stack ---------- */
 @media (max-width: 900px) {
-  .book { grid-template-columns: 1fr; height: auto; transform: none !important; padding: 8px; }
-  .page { overflow: visible; }
+  html, body { overflow-x: hidden; }
+  .book { grid-template-columns: minmax(0, 1fr); height: auto; transform: none !important; padding: 8px; width: 100%; }
+  .scene { padding: 12px 6px; }
+  .page { overflow-x: auto; overflow-y: visible; min-width: 0; padding: 22px 18px 16px; }
+  .hud { padding: 8px 12px; gap: 8px; }
+  .hud__brand { font-size: 13px; }
   .leaf { display: none; }
   .hud__lesson { display: none; }
 }
@@ -430,3 +434,6 @@ button.btn:disabled, .link-btn:disabled { opacity: .35; cursor: not-allowed; }
 :root[data-theme="dark"] .status, :root[data-theme="dark"] .net__s, :root[data-theme="dark"] .cell__ref,
 :root[data-theme="dark"] .tasks li.done .box, :root[data-theme="dark"] .sqlcard__q.done .box, :root[data-theme="dark"] .area__row--conflict { color: #14181b; }
 :root[data-theme="dark"] .status--info { background: #5f8fc2; }
+
+/* Long inline code (e.g. a whole expression) wraps instead of widening the page on phones. */
+:not(pre) > code { overflow-wrap: anywhere; }
