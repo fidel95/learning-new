@@ -59,6 +59,7 @@ Each lesson is a spread: ideas on the left page, a live workbench on the right.
 23. Problem-solving patterns (done): pattern-matching lab, sliding windows, prefix sums, interval merge, monotonic stack, canonical-key grouping. Completes Part 4
 24. Concurrency (done): race-condition lab (lost updates), build a mutex, bounded concurrency (mapLimit), deadlock lab, ordered-lock transfers, idempotency keys. Starts Part 5
 25. Databases in depth (done): indexes and query plans on 100k rows, isolation-anomaly simulator, atomic and optimistic updates, zero-downtime migration ordering
+26. Distributed systems (done): cluster partition/repair lab, vector clocks, quorum tuning, resilient consumer. Completes Part 5
 
 
 
