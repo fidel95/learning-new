@@ -25,3 +25,20 @@ export function mountOrdering(root, { intro, steps, explain = '', onPass = () =>
     if (ok && !passed) { passed = true; onPass(); }
   });
 }
+
+// A generic "match each item to the right option" lab (pass at `need` correct).
+export function mountMatch(root, { intro, options, items, need, onPass = () => {} }) {
+  root.append(el('p', { class: 'muted' }, intro));
+  const sels = items.map((p, i) => {
+    const card = el('div', { class: 'sqlcard' }); card.append(el('div', { class: 'sqlcard__q' }, (i + 1) + '. ' + p.q));
+    const s = el('select', { 'aria-label': 'Answer for item ' + (i + 1) }); s.append(el('option', { value: '' }, 'Choose…')); options.forEach((n, k) => s.append(el('option', { value: String(k) }, n)));
+    card.append(s); root.append(card); return { s, card };
+  });
+  const btn = el('button', { class: 'btn', type: 'button' }, 'Check my answers'), out = el('div'); root.append(btn, out); let passed = false;
+  btn.addEventListener('click', () => {
+    let pts = 0; out.replaceChildren();
+    items.forEach((p, i) => { const ok = sels[i].s.value === String(p.a); if (ok) { pts++; out.append(el('p', { class: 'muted' }, (i + 1) + '. ' + options[p.a] + ': ' + p.why)); } sels[i].card.classList.toggle('tm--ok', ok); sels[i].card.classList.toggle('tm--bad', !ok && sels[i].s.value !== ''); });
+    const ok = pts >= need; out.prepend(el('div', { class: 'status status--' + (ok ? 'good' : 'warn') }, pts + ' of ' + items.length + ' right' + (ok ? '.' : '. You need ' + need + '.')));
+    if (ok && !passed) { passed = true; onPass(); }
+  });
+}
